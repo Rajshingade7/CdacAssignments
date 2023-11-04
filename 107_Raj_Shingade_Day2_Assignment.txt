@@ -1,0 +1,212 @@
+Q_1
+package Assignment_day2;
+
+public class shape {
+	private int width;
+	private int height;
+	public void setwidth(int k) {
+		this.width=k;
+	}
+	public void setheight(int k) {
+		this.height=k;
+	}
+	public void getwidth() {
+		System.out.println(height);
+	}
+	public void getheight() {
+		System.out.println(width);
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		shape m1=new shape();
+		m1.setheight(45);
+		m1.setwidth(85);
+		m1.getheight();
+		m1.getwidth();
+	}
+
+}
+
+
+
+Q_2
+package Assignment_day2;
+
+public class MyClass {
+	MyClass(){
+		System.out.println("Default constructor");
+	}
+	MyClass(int i){
+		System.out.println("One parameterized constructor");
+	}
+	MyClass(int i,int j){
+		System.out.println("Two parameterized constructor");
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		MyClass m1=new MyClass();
+		MyClass m2=new MyClass(23);
+		MyClass m3=new MyClass(34,56);
+
+	}
+
+}
+
+
+
+Q_3
+package Assignment_day2;
+
+public class Emp {
+	private int cnt;
+	public void setcnt(int k) {
+		cnt=k;
+	}
+	public void getcnt() {
+		System.out.println(cnt);
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Emp m1=new Emp();
+		m1.setcnt(34);
+		m1.getcnt();
+
+	}
+
+}
+
+
+
+Q_4
+package Assignment_day2;
+
+public class DemoOb {
+	int num;
+	public void setnum(int k) {
+		num=k;
+	}
+	public void getnum() {
+		System.out.println(num);
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		DemoOb m1=new DemoOb();//Here m1 reference is pointing to new object of a class
+//		m1=null;
+		DemoOb m2=m1;//Here m2 is pointing to the same object which m1 is pointing
+		m1.setnum(23);//Here with the help of m1 reference we called setter method
+		m1.getnum();// Here called gettern method with m1
+//		m2.setnum(45);
+//		m2.getnum();
+
+		m2=new DemoOb();//Now reference m2 is pointinig to new object and old object pointing is disconnected
+		
+
+		m2.setnum(45);//Here getter setter is called
+		m2.getnum();
+		
+
+	}
+
+}
+
+
+Q_5
+package Assignment_day2;
+
+public class Demo {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		A d1=new A();
+		d1.method2();
+		A.method1();
+		B d2=new B();
+		d2.method2();
+		B.method1();
+		C d3=new C();
+		d3.method2();
+		C.method1();
+		
+
+	}
+
+}
+class A{
+	private static int a=20;
+	private int b=30;
+	static void method1() {
+		System.out.println(a);
+	}
+	void method2() {
+		System.out.println(b);
+	}
+}
+class B{
+	private static int a=45;
+	private int b=95;
+	static void method1() {
+		System.out.println(a);
+	}
+	void method2() {
+		System.out.println(b);
+	}
+}
+class C{
+	private static int a=78;
+	private int b=85;
+	static void method1() {
+		System.out.println(a);
+	}
+	void method2() {
+		System.out.println(b);
+	}
+}
+
+
+
+
+Q_6
+package Assignment_day2;
+
+public class Demo1 {
+	static {
+		System.out.println("This is demo static");
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Demo1 d1=new Demo1();
+		A1 a1=new A1();
+		B2 b2=new B2();
+		C3 c2=new C3();// Here in this code first demo class is load so demo static is called and then other static block is called as per class is loading sequence
+		
+		
+
+	}
+
+}
+class A1{
+	static {
+		System.out.println("This is clas A static");
+		
+	}
+	
+}
+class B2{
+	static {
+		System.out.println("This is B Static");
+		
+	}
+	
+}
+class C3{
+	static {
+		System.out.println("This is c Static");
+		
+	}
+	
+}

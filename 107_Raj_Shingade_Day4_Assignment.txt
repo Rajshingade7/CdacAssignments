@@ -1,0 +1,327 @@
+//1)	Define 2 classes “First” and “Second” with member variables , member functions and constructors of  your choice. Now define a class “Two” in which define main function . In main function create various instances of First and Second  and call their individual member functions.
+
+
+package Assignment_day4;
+class First{
+	int num;
+	void setnum(int k) {
+		this.num=k;
+	}
+	void getnum() {
+		System.out.println(num);
+	}
+	First(){
+		System.out.println("This is First constructor");
+	}
+}
+
+class Second{int num1;
+	void setnum(int k) {
+		this.num1=k;
+	}
+	void getnum() {
+		System.out.println(num1);
+	}
+	Second(int n){
+		System.out.println("This is second constructor");
+		System.out.println(n);
+	}
+	
+}
+
+public class Two {
+
+	public static void main(String[] args) {
+		First f=new First();
+		f.setnum(10);
+		f.getnum();
+		Second s=new Second(40);
+		s.setnum(49);
+		s.getnum();
+		
+	}
+
+}
+
+2)Create a class with static and non-static member variables. Define static and non-static member functions. Create instance of this class and call both static and non-static member functions.
+
+package Assignment_day4;
+
+public class Q_2 {
+	int num=45;
+	static int num1=39;
+	static void setnum(int k) {
+		num1=k;
+		System.out.println(num1);
+	}
+	void getnum() {
+		System.out.println(num);
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		Q_2 obj=new Q_2();
+		obj.setnum(48);
+		obj.getnum();
+	}
+
+}
+3)Define a class “Check” in which declare member variables using  different accessibility modifiers i.e.  <default>, private ,public and protected.   Define a function “disp”  which should be public.  Define a class “CheckDemo” in which you will write “main()” function. Create an instance of  the class “Check” and  show how many  variables can be accessed directly and how many indirectly.
+
+package Assignment_day4;
+class Check{
+	int num1=12;
+	private int num2=23;
+	protected int num3=45;
+	public int num4=34;
+	public void disp() {
+		System.out.println(num1);
+		System.out.println(num2);
+		System.out.println(num3);
+		System.out.println(num4);
+		
+	}
+
+}
+//Here except private every variable is directely accesible inside another class
+public class CheckDemo {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Check c1=new Check();
+		c1.disp();
+		System.out.println(c1.num3);
+		System.out.println(c1.num1);
+		System.out.println(c1.num4);
+	}
+
+}
+
+4)	Show the example of single level inheritance with constructor invocation.
+
+package Assignment_day4;
+class base{
+	int num;
+}
+class sub extends base{
+	private int num1;
+	void method2() {
+		System.out.println(num1);
+	}
+	
+}
+public class Q_4 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		sub s=new sub();
+		System.out.println(s.num);
+		s.method2();
+		
+	}
+
+}
+
+5)Show the example of multi-level inheritance with constructor invocation.
+
+package Assignment_day4;
+class base{
+	int num=30;
+	
+}
+class sub1 extends base{
+	
+}
+class sub2 extends sub1{
+	
+}
+
+public class Q_5 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		sub2 s1=new sub2();
+		System.out.println(s1.num);
+
+	}
+
+}
+
+6)Show the example of hierarchical inheritance with constructor invocation
+class base
+{int num1=45;
+int num2=56;
+	
+}
+class sub1 extends base{
+	
+}
+class sub2 extends base{
+	
+}
+public class Main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		sub1 s1=new sub1();
+		sub2 s2=new sub2();
+		System.out.println(s1.num1);
+		System.out.println(s2.num2);
+
+	}
+
+}
+
+7)Define a parent and a child class . Now explain function overriding with Example.
+package Assignment_day4;
+
+class parent{
+	void method() {
+		System.out.println("This is parent method");
+	}
+}
+class child extends parent{
+	void method() {
+		System.out.println("This is child method");
+	}
+}
+public class Q_7 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		child c=new child();
+		c.method();
+	}
+
+}
+
+8)Define a parent class with one function. Define child class with the function having same name as of parent class function, but having different argument.
+Create an instance of child class and call the functions. Make sure u have followed the concept of “function overloading “ in inheritance
+package Assignment_day4;
+class Shape{
+	void draw() {
+		
+	}
+}
+class Circle extends Shape{
+	void draw() {
+		System.out.println("This is circle draw");
+		
+	}
+}
+class Polygon extends Shape{
+	void draw() {
+		System.out.println("This is polygon draw");
+		
+	}
+}
+class Rectangle extends Shape{
+	void draw() {
+		System.out.println("This is rectangle draw");
+		
+	}
+}
+public class ShapeDemo {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Shape s=new Circle();
+		s.draw();
+
+	}
+
+}
+9)Define a class “Shape” with “draw()” function . Now derive  classes like “Circle”, “Polygon”,”Rectangle” etc. from “Shape” and override “draw()” function. Define a class “ShapeDemo” in which  write  main()  function. In the main function create a reference to Shape class referring to any of the sub class. Using this reference, call “draw()” and check the result.
+
+package Assignment_day4;
+class Shape{
+	void draw() {
+		
+	}
+}
+class Circle extends Shape{
+	void draw() {
+		System.out.println("This is circle draw");
+		
+	}
+}
+class Polygon extends Shape{
+	void draw() {
+		System.out.println("This is polygon draw");
+		
+	}
+}
+class Rectangle extends Shape{
+	void draw() {
+		System.out.println("This is rectangle draw");
+		
+	}
+}
+public class ShapeDemo {
+	static void perform(Shape ref) {
+		ref.draw();
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		perform(new Polygon());
+		perform(new Circle());
+		perform(new Rectangle());
+		
+		
+		/*
+		 * By using object we are doing this
+		 * 
+		 * */
+		Shape arr[]=new Shape[3];
+		arr[0]=new Circle();
+		arr[1]=new Polygon();
+		arr[2]=new Rectangle();
+		for(int i=0;i<arr.length;i++) {
+//			perform(arr[i]);
+			arr[i].draw();
+		}
+
+	}
+
+}
+10)Define an interface “Vechicle” with “start()” function . Now derive  classes like “TwoWheeler”, “ThreeWheeler”,”FourWheeler” etc. from “Vehicle” and override “start()” function. Define a class “VDemo” in which  write  main()  function. In the main function create a reference to Vehicle  class referring to any of the sub class. Using this reference, call “start" method.
+
+package Assignment_day4;
+interface Vehicle{
+	void start();
+}
+class TwoWheeler implements Vehicle{
+	public void start() {
+		System.out.println("This is start of Twowheeler");
+	}
+}
+class ThreeWheeler implements Vehicle{
+	public void start() {
+		System.out.println("This is start of Threewheeler");
+	}
+}
+class FourWheeler implements Vehicle{
+	public void start() {
+		System.out.println("This is start of Fourwheeler");
+	}
+}
+public class VDemo {
+	static void perform(Vehicle ref) {
+		ref.start();
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		perform(new TwoWheeler());
+		perform(new ThreeWheeler());
+		perform(new FourWheeler());
+	}
+
+}
+
+
+
+

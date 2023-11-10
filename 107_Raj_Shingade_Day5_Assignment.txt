@@ -1,0 +1,322 @@
+1)Create a multi-level inheritance , instantiate the child class and observe constructor invocation.Also show, if needed how will u invoke parent class constructor from child class ?
+
+package Assignment_day5;
+
+class Base{
+	Base(int n){
+		System.out.println("This is base constructor  "+n);
+	}
+	
+}
+class Sub1 extends Base{
+	Sub1(){
+		super(30);
+		System.out.println("This sub constructor");
+
+	}
+	
+}
+class Sub2 extends Sub1{
+	Sub2(){
+		System.out.println("This is sub2 constructor");
+	}
+}
+public class Q_1 {
+
+	public static void main(String[] args) {
+		Sub2 s=new Sub2();
+
+	}
+
+}
+
+
+2) create a class "Vehicle", define a method "public void start()" in it. From this class derive a class FourWheeler. How will u override "start()" method of parent class ?
+
+package Assignment_day5;
+class Vehicle{
+	public void start(){
+		System.out.println("This is parent class start");
+		
+	}
+}
+class FourWheeler extends Vehicle{
+	public void start() {
+		System.out.println("This is child class start");
+		
+	}
+}
+
+public class Q_2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Vehicle v=new FourWheeler();
+		v.start();
+
+	}
+
+}
+
+3) Go for Hierarchical inheritance, create instances of child class and observe constructor invocation.
+package Assignment_day5;
+class Base1{
+	Base1(){
+		System.out.println("This is base constructor");
+	}
+}
+class Sub3 extends Base1{
+	Sub3(){
+		System.out.println("This is sub3 constructor ");
+	}
+}
+class Sub4 extends Base1{
+	Sub4(){
+		System.out.println("This is sub4 constructor");
+	}
+}
+public class Q_3 {
+
+	public static void main(String[] args) {
+		Sub4 s=new Sub4();
+		Sub3 s1=new Sub3();
+	}
+
+}
+
+4)Create a class "Top1" with "disp1()" method.
+From this class Derive "Bottom1", "Bottom2" and "Bottom3" classes ,override the "disp1()".
+Now show how will u achieve dynamic polymorphism.
+
+package Assignment_day5;
+class Top1{
+	void disp1() {
+		System.out.println("This is top1 disp");
+	}
+}
+class Bottom1 extends Top1{
+	void disp1() {
+		System.out.println("Tis is Bottom1 disp");
+		
+	}
+}
+class Bottom2 extends Top1{
+	void disp1() {
+		System.out.println("This is Bottom2 disp");
+		
+	}
+}
+class Bottom3 extends Top1{
+	void disp1() {
+		System.out.println("This is bottom3 disp");
+		
+		
+	}
+}
+
+public class Q_4 {
+
+	public static void main(String[] args) {
+		Top1 b=new Bottom3();//Late binding //runtime polymorphism
+		Top1 b1=new Bottom1();
+		Top1 b2=new Bottom2();
+		
+		b.disp1();
+		b1.disp1();
+		b2.disp1();
+	}
+
+}
+
+5) create abstract class Shape. declare "draw()" function as abstract. From this class define "Triangle","Polygon" and "Circle" .
+create an array of Shape having 3 elements.
+store child objects into this array . and call
+their draw function
+
+package Assignment_day5;
+abstract class Shape{
+	abstract void draw();
+}
+class Triangle extends Shape{
+	void draw() {
+		System.out.println("This is triangel draw methdo");
+	}
+}
+class Polygon extends Shape{
+	void draw() {
+		System.out.println("This is Polygon draw methdo");
+	}
+}
+class Circle extends Shape{
+	void draw() {
+		System.out.println("This is Circle draw methdo");
+	}
+}
+public class Q_5 {
+
+	public static void main(String[] args) {
+		Shape arr[]=new Shape[3];
+		arr[0]=new Triangle();
+		arr[1]=new Polygon();
+		arr[2]=new Circle();
+		for(int i=0; i<arr.length;i++) {
+			arr[i].draw();
+		}
+		
+		
+	}
+
+}
+
+6)
+ Define interface "A" with "disp1()" method.
+Derive from "A", interface "B" with "disp2" method.
+Derive class "C" , from "B".
+Instantiate class "C" and call its members as well as derived from parent interfaces.
+package Assignment_day5;
+
+interface A{
+	abstract void disp1();
+}
+interface B extends A{
+	abstract void disp2();
+}
+class C implements B{
+	int a;
+	public void disp2() {
+		System.out.println("This is disp2 method");
+	}
+	public void disp1() {
+		System.out.println("This is disp1 method");
+	}
+}
+public class Q_6 {
+
+	public static void main(String[] args) {
+		C c1=new C();
+		c1.disp1();
+		c1.disp2();
+		System.out.println(c1.a);
+
+	}
+
+}
+
+7)Define class "Parent1" with some data.
+Define interface "Parent2" with some methods.
+Derive a class "Child" from "Parent1" and "Parent2", instantiate it and call the members.
+
+package Assignment_day5;
+
+class Parent1{
+	int n;
+	void p1() {
+		System.out.println("Thisis parent 1 method");
+	}
+	
+}
+interface Parent2{
+	void p2();
+	
+}
+class Child extends Parent1 implements Parent2{
+	public void p2() {
+		System.out.println("Thisis parent two method");
+		
+	}
+}
+
+
+public class Q_7 {
+
+	public static void main(String[] args) {
+		Child c=new Child();
+		c.p1();
+		c.p2();
+		System.out.println(c.n);
+	}
+
+}
+
+8)Define a class "base1" with only parameterized constructor.
+Derive a class "sub1" from "base1". This class should have following constructors
+	a) Default
+	b) one parameter
+	c) two parameter
+Now try to instantiate "sub1" , using any of the above mentioned constructors.
+
+package Assignment_day5;
+
+class Base1{
+	Base1(int n){
+		System.out.println(n);
+	}
+}
+class Sub1 extends Base1{
+	Sub1(){
+		super(34);
+	}
+	Sub1(int a,int b){
+		super(54);
+	}
+
+	Sub1(int n) {
+		super(n);
+		// TODO Auto-generated constructor stub
+	}
+	
+}
+public class Q_8 {
+
+	public static void main(String[] args) {
+		Sub1 s=new Sub1();
+		Sub1 s1=new Sub1(34);
+		Sub1 s2=new Sub1(23,45);
+	}
+
+}
+
+9)create interface "Game" , have an abstract method "play()". from this interface implements classes like "Cricket" , "FootBall" and "Tennis".
+Now Define one more class 
+public class Demo with main function.
+In this class have a static method "perform" which will take interface reference as parameter.inside "perform()" see to it that any child object passed ,its "play()" method should be invoked. Call "perform()" method from main function.
+
+package Assignment_day5;
+interface Game{
+	void play();
+}
+class Cricket implements Game{
+	public void play() {
+		System.out.println("This is cricket paly");
+		
+	}
+}
+class FootBall implements Game{
+	public void play() {
+		System.out.println("Play football");
+		
+	}
+}
+class Tennise implements Game{
+	public void play() {
+		System.out.println("Play tennise");
+		
+	}
+}
+public class Demo {
+
+	static void perform(Game s) {
+		s.play();
+	}
+
+	public static void main(String[] args) {
+		perform(new Tennise());
+		perform(new FootBall());
+		perform(new Cricket());
+		
+
+	}
+
+}
+
+

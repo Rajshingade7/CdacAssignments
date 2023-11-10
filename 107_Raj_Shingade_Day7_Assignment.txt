@@ -1,0 +1,547 @@
+1)
+package Assignment_day7;
+
+ abstract class Course
+{
+	public void start()
+	{
+		// start process
+	}
+	public abstract double getFee();
+	public abstract void evaluate();
+}
+ class DACDBDACourse extends Course{
+
+	@Override
+	public double getFee() {
+		// TODO Auto-generated method stub
+		System.out.println("This is dacdbda getfee");
+		return 455;
+	}
+
+	@Override
+	public void evaluate() {
+		System.out.println("This is dacdbda evaulate method");
+	}
+	 
+ }
+ class MSCitCourse extends Course{
+
+	@Override
+	public double getFee() {
+		// TODO Auto-generated method stub
+		System.out.println("Get fee returned");
+		return 456;
+	}
+
+	@Override
+	public void evaluate() {
+		System.out.println("Evaluate is done");
+		
+	}
+	 
+ }
+ class AbstractClass_Q1 {
+	 static void perform(Course ref) {//Here we direcly passing reference for newly created object
+		 ref.evaluate();//Polymorphic invocation
+		 ref.getFee();
+	 }
+
+	public static void main(String[] args) {
+		
+		perform(new MSCitCourse() );
+		perform(new DACDBDACourse()	);
+
+}}
+
+2)
+package Assignment_day7;
+abstract class Beverages {
+
+	// Defined
+	public void addMilk() {
+		System.out.println("Milk is added");
+
+	}
+
+	// abstract
+	abstract void addIngredients();
+}
+
+class Coffee extends Beverages
+{
+	void addIngredients()
+	{
+		// ingredients for Coffee
+		System.out.println("Here are all the ingredient for cofee");
+	}
+	// addMilk inherited
+}
+class Tea extends Beverages
+{
+	void addIngredients()
+	{
+		System.out.println("Here are all the ingredient for Tea");
+	}
+	// addMilk inherited
+}
+class FruitJuice extends Beverages
+{
+	void addIngredients()
+	{
+		System.out.println("Here are all the ingredient for FruitJuice");
+	}
+	// addMilk inherited
+}
+public class AbstractClassQ_2 {
+
+	public static void main(String[] args) {
+		Beverages arr[]=new Beverages[3];
+		arr[0]=new FruitJuice();
+		arr[1]=new Tea();
+		arr[2]=new Coffee();
+		for(int i=0;i<3;i++) {
+			arr[i].addIngredients();
+			arr[i].addMilk();
+		}
+	}
+
+}
+3)
+package Assignment_day7;
+
+abstract class Shape{
+	abstract public void draw();
+	public void show() {
+		System.out.println("This is Shape demo show method");
+	}
+}
+class Triangle extends Shape{
+
+	@Override
+	public void draw() {
+		System.out.println("This is triangle draw");
+	}
+	
+}
+class Rectangle extends Shape{
+
+	@Override
+	public void draw() {
+		System.out.println("This is rectangle draw");
+	}
+	
+}
+class Circle extends Shape{
+
+	@Override
+	public void draw() {
+		System.out.println("This is circle draw");
+	}
+	
+}
+
+public class Assignment_Q_3 {
+
+	public static void main(String[] args) {
+		Shape s[]=new Shape[3];
+		s[0]=new Triangle();
+		s[1]=new Rectangle();
+		s[2]=new Circle();
+		for(int i=0;i<3;i++) {
+			s[i].draw();
+			s[i].show();
+		}
+		
+		
+	}
+
+}
+
+
+4)public class UIComponent
+{
+}
+public class Button extends UIComponent
+{
+}
+public class TextField extends UIComponent
+{
+}
+public class CheckBox extends UIComponent
+{
+}
+public abstract class UIComponentCreator
+{
+	public void show(String type)
+	{
+		UIComponent comp=createUIComponent(type);
+		add(comp);
+	}
+	public void add(UIComponent component)
+	{
+		System.out.prinlnt("Added the component\t"+component);
+	}
+	public abstract UIComponent createUIComponent(String type);
+}
+
+create 3 child classes of "UIComponentCreator"
+	WindowsUIComponentCreator, LinuxUIComponentCreator and MacUIComponentCreator
+ in all these classes "createUIComponent()" method must be defined in such a way that whatever type is passed as per this it must return a specific UIComponent. e.g. if "button" is passed , it should return "Button" class object   or if "textfield" is passed , it should return "TextField" class object.
+
+create a class UIComponentCreatorDemo with main function
+inside main function
+	create objects of WindowsUIComponentCreator, LinuxUIComponentCreator and MacUIComponentCreator classes and invoke "createUIComponent()" ,"add()" and "show()" methods.
+
+
+
+
+
+Ans
+package Assignment_day7;
+ class UIComponent {
+}
+
+ class Button extends UIComponent {
+}
+
+ class TextField extends UIComponent {
+}
+
+ class CheckBox extends UIComponent {
+}
+
+ abstract class UIComponentCreator {
+    public void show(String type) {
+        UIComponent comp = createUIComponent(type);
+        add(comp);
+    }
+
+    public void add(UIComponent component) {
+        System.out.println("Added the component\t" + component);
+    }
+
+    public abstract UIComponent createUIComponent(String type);
+}
+
+class WindowsUIComponentCreator extends UIComponentCreator {
+    
+    public UIComponent createUIComponent(String type) {
+        if ("button".equalsIgnoreCase(type)) {
+            return new Button();
+        } else if ("textfield".equalsIgnoreCase(type)) {
+            return new TextField();
+        } else if ("checkbox".equalsIgnoreCase(type)) {
+            return new CheckBox();
+        }
+		return null; 
+    }
+}
+
+class LinuxUIComponentCreator extends UIComponentCreator {
+    
+    public UIComponent createUIComponent(String type) {
+        if ("button".equalsIgnoreCase(type)) {
+            return new Button();
+        } else if ("textfield".equalsIgnoreCase(type)) {
+            return new TextField();
+        } else if ("checkbox".equalsIgnoreCase(type)) {
+            return new CheckBox();
+        }
+		return null; 
+    }
+}
+
+class MacUIComponentCreator extends UIComponentCreator {
+    
+    public UIComponent createUIComponent(String type) {
+        if ("button".equalsIgnoreCase(type)) {
+            return new Button();
+        } else if ("textfield".equalsIgnoreCase(type)) {
+            return new TextField();
+        } else if ("checkbox".equalsIgnoreCase(type)) {
+            return new CheckBox();
+        }
+		return null; 
+    }
+}
+
+public class UIComponentCreatorDemo {
+    public static void main(String[] args) {
+        UIComponentCreator w = new WindowsUIComponentCreator();
+        UIComponentCreator l = new LinuxUIComponentCreator();
+        UIComponentCreator m = new MacUIComponentCreator();
+
+        w.show("button");
+        l.show("textfield");
+        m.show("checkbox");
+    }
+}
+
+5>
+accept 3 numbers through command line arguments and display their sum.
+public class Day7_Q5 {
+	
+	
+	public static void main(String[] args) {
+		int sum=0;
+		for(int i=0;i<args.length;i++) {
+       	int k=Integer.parseInt(args[i]);
+			sum=sum+k;
+		}
+		System.out.println(sum);
+	}
+
+}
+
+7>package assigment;
+ interface PizzaIngredientFactory
+{
+	public Dough createDough();
+	public Sauce createSauce();
+	public Cheese createCheese();
+	public Pepperoni createPepperoni();
+	public Clams createClams();
+}
+
+ class Dough{
+	 
+ }
+ class Cheese{
+	 
+ }
+ class Sauce{
+	 
+ }
+ class Pepperoni{
+	 
+ }
+ class Clams{
+	 
+ }
+ class USPizzaIngredientFactory implements PizzaIngredientFactory{
+	 public Dough createDough() {
+		 System.out.println("dough uses in USPizzaIngredientFactory ");
+		 return null;
+	 }
+		public Sauce createSauce() {
+     System.out.println("Sauce uses in USPizzaIngredientFactory ");
+     return null;
+		}
+		public Cheese createCheese() {
+			System.out.println("Cheese uses in USPizzaIngredientFactory ");
+			return null;
+		}
+		public Pepperoni createPepperoni() {
+       System.out.println("Pepperoni uses in USPizzaIngredientFactory ");
+        return null;
+		}
+		public Clams createClams() {
+			System.out.println("Clams uses in USPizzaIngredientFactory ");
+			return null;
+		}
+	 
+ }
+ class IndianPizzaIngredientFactory implements PizzaIngredientFactory{
+	 public Dough createDough() {
+		 System.out.println("dough uses in IndianPizzaIngredientFactory ");
+		 return null;
+
+	 }
+		public Sauce createSauce() {
+			System.out.println("Sauce uses in IndianPizzaIngredientFactory ");
+			 return null;
+		}
+		public Cheese createCheese() {
+			System.out.println("Cheese uses in IndianPizzaIngredientFactory ");
+			 return null;
+		}
+		public Pepperoni createPepperoni() {
+			System.out.println("Pepperoni uses in IndianPizzaIngredientFactory ");
+			 return null;
+		}
+		public Clams createClams() {
+			System.out.println("Clams uses in IndianPizzaIngredientFactory ");
+			 return null;
+		}
+ }
+public class Day7_Q7 {
+public static void main(String[] args) {
+	
+	
+	PizzaIngredientFactory ref[]=new PizzaIngredientFactory[2];
+	ref[0]=new USPizzaIngredientFactory();
+	ref[1]=new IndianPizzaIngredientFactory();
+	
+	for(int i=0;i<ref.length;i++) {
+		ref[i].createDough();
+		ref[i].createSauce();
+		ref[i].createClams();
+		ref[i].createPepperoni();
+		ref[i].createCheese();
+		
+	}
+}
+		
+}
+
+8>
+kage assigment;
+
+ class Course
+{
+	public void start()
+	{
+	}
+	public void stop()
+	{
+	}
+}
+
+class DACDBDACourse extends Course{
+	public void start()
+	{
+		System.out.println("DACDBDACourse course is start");
+	}
+	public void stop()
+	{
+		System.out.println("DACDBDACourse course is stop");
+	}
+	public void orientation() {
+		System.out.println("DACDBDACourse orientation");
+	}
+}
+class MSCit extends Course{
+	public void start()
+	{
+		System.out.println("MSCit course is start");
+	}
+	public void stop()
+	{
+		System.out.println("MSCit course is stop");
+	}
+}
+class Basic extends Course{
+	public void start()
+	{
+		System.out.println("Basic course is start");
+	}
+	public void stop()
+	{
+		System.out.println("Basic course is stop");
+	}
+}
+public class CourseDemo  {
+
+	
+	public static void main(String[] args) {
+		
+		Course ref[]=new Course[3];
+		ref[0]=new DACDBDACourse();
+		ref[1]=new MSCit();
+		ref[2]=new Basic();
+		for(int i=0;i<ref.length;i++) {
+			if(ref[i] instanceof DACDBDACourse) {
+				DACDBDACourse d=(DACDBDACourse)ref[i];
+				d.orientation();
+			}
+			ref[i].start();
+			ref[i].stop();
+		}
+		
+	}
+}
+
+
+9>
+package assigment;
+
+import java.time.Period;
+
+class Course
+{
+	public void start()
+	{
+	}
+	public void stop()
+	{
+	}
+}
+
+class DACDBDACourse extends Course{
+	public void start()
+	{
+		System.out.println("DACDBDACourse course is start");
+	}
+	public void stop()
+	{
+		System.out.println("DACDBDACourse course is stop");
+	}
+	public void orientation() {
+		System.out.println("DACDBDACourse orientation");
+	}
+}
+class MSCit extends Course{
+	public void start()
+	{
+		System.out.println("MSCit course is start");
+	}
+	public void stop()
+	{
+		System.out.println("MSCit course is stop");
+	}
+}
+class Basic extends Course{
+	public void start()
+	{
+		System.out.println("Basic course is start");
+	}
+	public void stop()
+	{
+		System.out.println("Basic course is stop");
+	}
+
+public class CourseDemo1 {
+   public static void show(Course ref) {
+	   ref.start();
+	   ref.stop();
+	   if(ref instanceof DACDBDACourse) {
+		   DACDBDACourse d=(DACDBDACourse)ref;
+		   d.orientation();
+	   }
+   }
+   
+   public static void main(String[] args) {
+	  
+	   show(new MSCit());
+	   show(new Basic());
+	   show(new DACDBDACourse()); 
+}
+}
+
+10>
+package assigment;
+
+public  class Demo {
+	public void disp(int...k) {
+		int sum=0;
+		for(int i=0;i<k.length;i++) {
+			
+		      sum=sum+k[i];
+		}
+		System.out.println(sum);
+	}
+	
+	public static void main(String[] args) {
+		Demo d=new Demo();
+		d.disp(10,20,30);
+		d.disp(40,50,60);
+		
+}
+}
+
+
+
+
+
+

@@ -1,0 +1,239 @@
+-------------------------------------------------------------------------
+1>
+package assigment;
+import java.util.Scanner;
+class myEx extends Exception
+{
+	public myEx(String str) {
+		super(str);
+	}
+}
+
+class Calculator{
+	public int Calculator(int num) throws myEx
+	{
+		if(num==0) {
+			throw new myEx("Zero not allowed");
+		}
+		else if(num<0) {
+			throw new myEx("negative not allowed");
+		}
+		else {
+		return num*2;
+		}
+	}
+	
+}
+public class MyArithException {
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);int res=0;
+		System.out.println("enter the no:");
+		int a=sc.nextInt();
+		try {
+			Calculator c=new Calculator();
+			res=c.Calculator(a);
+		}
+		catch(myEx m) {
+			System.out.println(m);
+		}
+		System.out.println(res);
+	}
+}
+-----------------------------------------------------------------------------------------------------------
+
+2>//developer code
+public class myEx extends Exception
+{
+	public myEx(String str) {
+		
+		super(str);
+	}
+
+}
+//cilent code
+package Client10;
+import Devpro_assigment4.*;
+class mymath
+{
+	public void disp(int num) throws myEx
+	{
+		if(num%7!=0) {
+			throw new myEx("number is not divide by 7");
+		}
+		else {
+			System.out.println(num);
+		}
+	}
+	
+}
+public class Demo {
+
+	public static void main(String[] args) {
+		try {
+			mymath m=new mymath();
+			m.disp(10);
+		}
+		catch(myEx e) {
+			System.out.println(e);
+		}
+	}
+	
+}
+---------------------------------------------------------------
+3>
+package assigment;
+import java.util.Scanner;
+
+class MyException extends Exception
+{
+	public MyException(String str) {
+		super(str);
+	}
+	
+}
+
+public class Demo1 {
+
+	public void show1() 
+	{
+		try {
+			show2();
+		}
+		catch(MyException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	public void show2() throws MyException
+	{
+		show3();
+	}
+    public void show3() throws MyException
+    {
+    	Scanner sc=new Scanner(System.in);
+    	System.out.println("enter");
+    	int a=sc.nextInt();
+    	if(a>10) {
+    		throw new MyException("number is greater than 10 ");
+    	}
+		
+	}
+   public static void main(String[] args) {
+	   Demo1 d=new Demo1();
+	    d.show1();
+	    
+	
+}
+}
+----------------------------------------------------------------------------------------
+4>
+//developer code
+package Devpro_assigment5;
+
+public class InvalidLengthException extends Exception
+{
+      public InvalidLengthException(String str) {
+    	  super(str);
+      }
+}
+//cilent code
+package Client11;
+import Devpro_assigment5.*;
+class Authenticator {
+	public Authenticator(String Password) throws InvalidLengthException
+	{
+		int pass=Integer.parseInt(Password);
+		if((pass<5)||(pass>9))
+		{
+		  	throw new InvalidLengthException("password in between 5-9");
+		}
+		else {
+			done();
+		}
+		
+	}
+	public void done() {
+		System.out.println("successful authentication");
+	}
+}
+
+public class Demo2 {
+
+	public static void main(String[] args) {
+		try {
+		Authenticator ref=new Authenticator("1011111111");
+		}
+		catch(InvalidLengthException e) {
+			System.out.println(e);
+		}
+		
+		
+	}
+}
+------------------------------------------------------------------------------------------------------
+5>
+//developer code
+package Devpro_assigment6;
+
+public interface AutoCloseable {
+ 
+	
+	
+	 void MyResource(int capacity)throws ResourceNotAllocatedException;
+	 void disp();
+	 void close();
+}
+
+package Devpro_assigment6;
+
+public class MyResource implements AutoCloseable
+{
+       public void MyResource(int capacity)throws ResourceNotAllocatedException
+       {
+    	   if(capacity>100) {
+    		   throw new ResourceNotAllocatedException("not sufficient space");
+    	   }
+    	   else {
+    		   disp();
+    		  
+    	   }
+       }
+       public void disp()
+       {
+       	System.out.println("successful");
+       }
+       @Override
+       public void close() {
+    	   System.out.println("resource is closed");
+       }
+       
+}
+
+package Devpro_assigment6;
+public class ResourceNotAllocatedException extends Exception
+{
+  public ResourceNotAllocatedException(String str) {
+	  super(str);  
+  }
+}
+//cilent code
+package Client12;
+
+import Devpro_assigment6.*;
+import Devpro_assigment6.AutoCloseable;
+
+public class Demo3 
+{
+	public static void main(String[] args) {
+		
+		try {
+			AutoCloseable ref=new MyResource();
+			ref.MyResource(101);
+		}
+		catch(ResourceNotAllocatedException e){
+			System.out.println(e);
+		}
+	}
+	
+}

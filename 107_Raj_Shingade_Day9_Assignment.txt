@@ -1,0 +1,289 @@
+----------------------------------------------
+1>
+class MyClass{
+	@Override
+	public String toString() {
+		return "["+getClass().getName()+"]";
+	}
+	
+}
+class Everything{
+	
+	public void perfrom(Object...k) {
+		for(int i=0;i<k.length;i++) {
+			System.out.println(k[i]);
+		}
+	}
+}
+public class Demo1 {
+public static void main(String[] args) {
+	  Everything ref=new Everything();
+	   MyClass ref1=new MyClass();
+		  ref.perfrom("prashant",100,'a',ref1);
+	  
+	
+}
+}
+----------------------------------------------
+2>
+class Sample{
+	private char ch;
+	public Sample(char ch) {
+		this.ch=ch;
+	}
+  @Override
+  public String toString() {
+	  return "["+ch+"]";
+  }
+  public boolean equals(Sample ref) {
+	  return this.ch==ref.ch;
+  }
+  public char hashCode() {
+	  return ch;
+  }
+}
+
+public class Demo2 {
+	public static void main(String args[]) {
+		Sample s1=new Sample('a');
+		Sample s2=new Sample('a');
+		System.out.println(s1);
+		System.out.println(s2);
+		if(s1.equals(s2)) {
+			System.out.println("object contain is same");
+		}
+		else {
+			System.out.println("object contain is different");
+		}
+		if(s1==s2) {
+			System.out.println("two differnt refernce is referring to the same object");
+		}
+		else {
+			System.out.println("two differnt refernce is not referring to the same object");
+		}
+	    System.out.println(s1.hashCode());
+	    System.out.println(s2.hashCode());
+		
+	
+
+}
+}
+-----------------------------------------------------------------------
+3>class Afun{
+	public void Afun() {
+		System.out.println("in the A fun");
+	}
+}
+class Bfun{
+	public void Bfun() {
+		System.out.println("in the B fun");
+	}
+	
+}
+class Cfun{
+	
+	public void Cfun() {
+		System.out.println("in the c fun");
+	}
+}
+class Dfun{
+	public void Dfun() {
+		System.out.println("in the D fun");
+	}
+	
+}
+public class Demo3 {
+	public static void main(String[] args) {
+		//here the Object is the parent of the all class
+		Object arr[]=new Object[4];
+		arr[0]=new Afun();
+		arr[1]=new Bfun();
+		arr[2]=new Cfun();
+		arr[3]=new Dfun();
+		for(int i=0;i<arr.length;i++) {
+			if(arr[i] instanceof Cfun) {
+				Cfun c=(Cfun)arr[i];
+				c.Cfun();
+			}
+			
+		}
+		
+		
+	}
+
+}
+--------------------------------------------------------------------
+4>class Artist{
+	void perfrom() {
+		System.out.println("artist is perfrom");
+	}
+}
+class Actor extends Artist{
+	void perfrom(){
+		System.out.println("Actor is perfrom");
+	}
+	void changeGateUp() {
+		System.out.println("as per the role demands");
+	}
+}
+class Singer extends Artist{
+	void perfrom() {
+	  System.out.println("Singer is perfrom");
+	}
+}
+class Musician extends Artist{
+	void perfrom() {
+		System.out.println("Musician is perfrom");
+	}
+}
+public class Demo4 {
+  public static void main(String[] args) {
+	  Artist ref[]=new Artist[3];
+	ref[0]=new Actor();
+	ref[1]=new Singer();
+	ref[2]=new Musician();
+	for(int i=0;i<ref.length;i++) {
+		if(ref[i] instanceof Actor) {
+			Actor A=(Actor)ref[i];
+			A.changeGateUp();
+		}
+		ref[i].perfrom();
+	}	
+}
+}
+--------------------------------------------------------------------
+5>
+//developer code
+
+public class VotingNotAllowedException extends Exception
+{
+	
+	public VotingNotAllowedException(String str) {
+	    super(str);
+	}
+	
+
+}
+
+public class Person {
+	private String name;
+	private int age;
+	public Person(int age,String name) throws VotingNotAllowedException
+	{
+		
+		 this.age=age;
+		 this.name=name;
+		 if(age<18) {
+			 throw new VotingNotAllowedException ("your age is less than 18 so the Voting is not allowed");
+		 }
+		 else {
+			 System.out.println("your is age is above 18");
+		 }
+		
+	}
+	@Override
+	public String toString() {
+		return "["+age+"]"+"["+name+"]";
+	}
+
+}
+
+//cilent code
+
+public class clientpro {
+	public static void main(String[] args) {
+		Person ref;
+		try {
+	         ref=new Person(500,"prashant");
+	         System.out.println(ref);
+		}
+		catch(VotingNotAllowedException e) {
+			System.out.println(e);
+			
+		}
+		
+	}
+}
+--------------------------------------------------------------------------
+6>
+public class Demo5 {
+	public static void main(String[] args) {
+		
+		Class c=null;
+		try {
+		c=Class.forName(args[0]);
+		}
+		catch(ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	    Method method[]=c.getDeclaredMethods();
+	    for(int i=0;i<method.length;i++) {
+	    	System.out.println(method[i]);
+	    }
+		     
+		
+		
+	}
+
+}
+-------------------------------------------------------------------------------
+7>
+//developer code
+public class First {
+	@Override
+	public String toString() {
+		return getClass().getName();
+	}
+
+}
+
+public class Second {
+	@Override
+	public String toString() {
+		return getClass().getName();
+	}
+
+}
+
+public class Thrid {
+	@Override
+	public String toString() {
+		return getClass().getName();
+	}
+
+}
+
+public class Fourth {
+
+	@Override
+	public String toString() {
+		return getClass().getName();
+	}
+}
+
+//cilent code
+
+import java.lang.reflect.*;
+import Devpro_assigment8.*;
+import Devpro_assigment8.First;
+public class Demo {
+      static Object returnObject(String args) {
+    	 Object obj=null;
+    	  try {
+    		  Class c=Class.forName(args);
+    		  obj=c.newInstance();
+    	  }
+    	  catch(Exception e) {
+    		  e.printStackTrace();
+    	  }
+    	  return  obj; 
+      }
+
+	public static void main(String[] args) {
+		
+		     Object ref=returnObject(args[0]);
+		     System.out.println(ref);
+		
+	}
+	
+}

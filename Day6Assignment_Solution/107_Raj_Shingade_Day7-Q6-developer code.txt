@@ -1,0 +1,69 @@
+
+
+Q6>-Developer Code
+/**
+ * 
+ */
+package Devpro_assigment3;
+
+/**
+ * interface to define only declaration of method
+ */
+public interface Shape {
+	
+	void draw();
+
+}
+
+
+
+/**
+ * 
+ */
+package Devpro_assigment3;
+
+
+
+public class Cricle implements Shape
+{
+	/**
+	 * implemention method to implements the interface method
+	 */
+	public void draw() {
+		System.out.println("draw a cricle");
+	}
+}
+
+
+package Devpro_assigment3;
+
+
+public class Rect  implements Shape
+{
+	/**
+	 * implemention method to implements the interface method
+	 */
+	   public void draw() {
+		   System.out.println("draw the Reactangle");
+	   }
+}
+
+/**
+ * 
+ */
+package Devpro_assigment3;
+
+
+
+public class Triangle implements Shape  {
+	/**
+	 *  implemention method to implements the interface method
+	 */
+	
+	public void draw() {
+		System.out.println("draw a Triangle");
+	}
+   
+}
+
+

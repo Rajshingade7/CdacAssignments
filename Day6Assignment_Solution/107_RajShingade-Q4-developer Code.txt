@@ -1,0 +1,18 @@
+/**
+ * 
+ */
+package Devpro_assigment2;
+
+/**
+ * 
+ */
+public interface Vehicle {
+	/**
+	 * 
+	 * interface to add the abstract method
+	 */
+	    void changeGear(int a); 
+	    void speedUp(int a); 
+	    void applyBrakes(int a);
+
+}

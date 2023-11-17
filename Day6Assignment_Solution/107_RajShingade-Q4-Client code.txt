@@ -1,0 +1,60 @@
+package Client8;
+import Devpro_assigment2.Vehicle;
+
+public class clientpro {
+
+	static void perfrom(Vehicle ref) {
+		
+		ref.applyBrakes(10);
+		ref.changeGear(20);
+		ref.speedUp(30);
+	}
+	
+	
+	public static void main(String[] args) {
+	perfrom(new FourWheeler());
+
+	}
+
+}
+
+package Client8;
+import Devpro_assigment2.Vehicle;
+public class FourWheeler implements Vehicle
+{
+
+	public void changeGear(int a)
+	{
+		System.out.println("how to change" + a +" gear in FourWheeler");		
+		
+     }
+	public void speedUp(int a)
+	{
+		System.out.println("how to speed up above" + a +" FourWheeler");
+	}
+	public void applyBrakes(int a)
+	{
+		System.out.println("how to apply brakes of FourWheeler");
+	}
+}
+
+
+
+package Client8;
+import Devpro_assigment2.Vehicle;
+public class TwoWheeler implements Vehicle{
+
+	
+	public void changeGear(int a)
+	{
+		System.out.println("how to change" + a + "gear in TwoWheeler");
+	}
+	public void speedUp(int a)
+	{
+		System.out.println("how to speed up" + a + "TwoWheeler");
+	}
+	public void applyBrakes(int a)
+	{
+		System.out.println("how to apply brakes of TwoWheeler");
+	}
+}

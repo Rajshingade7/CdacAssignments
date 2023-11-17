@@ -1,0 +1,71 @@
+1>/*on developer side:
+
+create interface "Shape" with "void draw();" method.
+
+now define child classes 
+	Triangle,Rect and Circle
+
+create necessary jar file and documentation.
+
+
+on Client side:
+
+define "ShapeDemo" class with main function
+
+create an array of "Shape" with 3 elements. store objects of Triangle,Rect and Circle in this array. now traverse the array and invoke "draw()" of each child.*/
+
+
+package Devpro_assigment1;
+public interface Shape1 {
+	/**
+	 * interface to define only declaration of method 
+	 */
+	void draw();
+
+}
+
+
+package Devpro_assigment1;
+
+public class Rect implements Shape1 {
+
+/**
+ * implemention method to implements the interface method
+ */
+   public void draw() {
+	   System.out.println("draw the Reactangle");
+   }
+
+
+
+/**
+ * 
+ */
+package Devpro_assigment1;
+
+
+public class Cricle implements Shape1 {
+	/**
+	 * implemention method to implements the interface method
+	 */
+	
+	public void draw() {
+		System.out.println("draw a cricle");
+	}
+
+}
+
+
+package Devpro_assigment1;
+
+public class Triangle implements Shape1 {
+	/**
+	 *  implemention method to implements the interface method
+	 */
+	
+	public void draw() {
+		System.out.println("draw a Triangle");
+	}
+   
+}
+

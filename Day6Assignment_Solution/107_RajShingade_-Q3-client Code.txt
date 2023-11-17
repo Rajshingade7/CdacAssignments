@@ -1,0 +1,74 @@
+package Client7;
+import Devpro_assigment2.PersistenceMechanism;
+
+public class clientpro 
+{
+
+	public static void main(String[] args) {
+		PersistenceMechanism arr[]=new PersistenceMechanism[3];
+		arr[0]=new FileSystem();
+		arr[1]=new DatabaseSystem();
+		arr[2]=new BigdataSystem();
+      for(int i=0;i<arr.length;i++) {
+    	  
+    	    if(arr[i] instanceof BigdataSystem) {
+			arr[i].writeData("prashant");
+			System.out.println(arr[i].readData());
+		
+    	    }
+      }
+	}
+
+}
+
+
+package Client7;
+import Devpro_assigment2.PersistenceMechanism;
+public class BigdataSystem implements PersistenceMechanism {
+	String Ref;
+	public void writeData(String Ref)
+	{
+		this.Ref=Ref;
+	}
+	public String readData()
+	{
+		return Ref;
+	}
+
+}
+
+
+package Client7;
+import Devpro_assigment2.PersistenceMechanism;
+public class DatabaseSystem implements PersistenceMechanism {
+
+	String Ref;
+	public void writeData(String Ref)
+	{
+		this.Ref=Ref;
+	}
+	public String readData()
+	{
+		return Ref;
+	}
+
+}
+
+
+
+package Client7;
+import Devpro_assigment2.PersistenceMechanism;
+
+public class FileSystem implements PersistenceMechanism
+{
+	String Ref;
+	public void writeData(String Ref)
+	{
+		this.Ref=Ref;
+	}
+	public String readData()
+	{
+		return Ref;
+	}
+	
+}

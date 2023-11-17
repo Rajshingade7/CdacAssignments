@@ -1,0 +1,29 @@
+/**
+ * 
+ */
+package first;
+import Devpro_assigment1.Cricle;
+import Devpro_assigment1.Rect;
+import Devpro_assigment1.Shape1;
+import Devpro_assigment1.Triangle;
+
+public class ShapeDemo implements Shape1 {
+
+	
+	public static void main(String[] args) {
+		Shape1 ref[]=new Shape1[3];
+		ref[0]=new Rect();
+		ref[1]=new Triangle();
+		ref[2]=new Cricle();
+		for(int i=0;i<ref.length;i++) {
+			ref[i].draw();
+		}
+	}
+
+	@Override
+	public void draw() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

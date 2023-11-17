@@ -1,0 +1,10 @@
+package Devpro_assigment2;
+
+public interface PersistenceMechanism {
+	/**
+	 * interface to declare method
+	 */
+	void writeData(String ref);
+	String readData();
+
+}

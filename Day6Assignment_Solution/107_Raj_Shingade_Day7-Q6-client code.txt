@@ -1,0 +1,28 @@
+package Client9;
+import Devpro_assigment3.Cricle;
+import Devpro_assigment3.Rect;
+import Devpro_assigment3.Triangle;
+import Devpro_assigment3.*;
+public class shapeDemo implements Shape
+{
+
+	public static void perfrom(Shape S) {
+		
+		S.draw();
+	}
+	public static void main(String[] args) {
+		
+		perfrom(new Rect());
+		perfrom(new Triangle());
+		perfrom(new Cricle());
+		
+		
+
+	}
+	@Override
+	public void draw() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

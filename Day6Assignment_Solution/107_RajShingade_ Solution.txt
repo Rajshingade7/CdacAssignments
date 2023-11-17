@@ -1,0 +1,107 @@
+
+2>
+package assigment;
+ interface MouseHandler1
+{
+	void mouseClicked();
+	void mousePressed();
+	void mouseReleased();
+}
+ interface WindowHandler1
+{
+	void windowClosing();
+	void windowClosed();
+}
+
+class WindowGUIApp implements MouseHandler1,WindowHandler1
+{
+	public void mouseClicked(){
+	System.out.println("mouseClicked");
+}
+public void mousePressed() {
+	System.out.println("mousePressed");
+}
+public void mouseReleased() {
+	System.out.println("mouseReleased");
+}
+public void windowClosing() {
+	System.out.println("windowClosing");
+}
+public void windowClosed() {
+	System.out.println("windowClosed");
+}
+}
+public class GUIDemo
+{
+	public static void main(String[] args) {
+		WindowGUIApp ref=new WindowGUIApp();
+		ref.mouseClicked();
+		ref.mousePressed();
+		ref.mouseReleased();
+		ref.windowClosed();
+		ref.windowClosing();
+		
+		
+	}
+}
+
+
+
+5>
+package assigment;
+
+
+ class Weapon
+{
+public void attack()
+{
+	System.out.println("attack");
+}
+}
+ class Sword extends Weapon
+{
+	 public void attack()
+	 {
+	 	System.out.println("attack with Sword");
+	 }
+
+}
+ class Bomb extends Weapon
+{
+	 public void attack()
+	 {
+	 	System.out.println("attack with Bomb");
+	 }
+}
+ class Gun extends Weapon
+{
+	public void attack()
+	 {
+	 	System.out.println("attack with Gun");
+	 }
+	
+public void fillBullets()
+{
+	System.out.println("filling bullets");
+}
+}
+
+class Soldier
+{
+// define "fight" method in such a way that given any specific weapon, it should be able to attack
+public void fight(Weapon ref)
+{
+	ref.attack();
+	// make sure you invoke "fillBullets" also along with "attack" and that shouldn't give "ClassCastException"
+}
+
+}
+public class WeaponDemo
+{
+public static void main(String[] args) 
+{
+	//invoke "fight" method of Soldier class
+	Soldier s1=new Soldier();
+	s1.fight(new Sword());
+}
+}

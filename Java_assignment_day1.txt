@@ -1,0 +1,340 @@
+Q_1
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        
+        int number=11;
+     
+        System.out.println("Multiplication Table for " + number + ":");
+        for (int i = 1; i <= 10; i++) {
+            int result = number * i;
+            System.out.println(number + " x " + i + " = " + result);
+        }
+    }
+}
+
+Q_2
+public static void main(String[] args) {
+		int a=10;
+		int b=20;
+		char c='/';
+		switch(c){
+		case'+':
+			System.out.println(a+b);
+			break;
+		case '-':
+			System.out.println(a-b);
+			break;
+		case '*':
+			System.out.println(a*b);
+			break;
+			default:
+				System.out.println("enter the correct operator");	
+		}	
+	  }
+
+Q_3
+public class DisplayNumbers {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 10; i++) {
+            System.out.println(i);
+        }
+    }
+}
+
+Q_4
+public class Main {
+    public static void main(String[] args) {
+        for (int i = 3; i <= 30; i++) {
+            if (i != 24) {
+                System.out.println(i);
+            }
+        }
+    }
+}
+Q_5
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter the score: ");
+        int score = scanner.nextInt();
+        
+        scanner.close();
+        
+        if (score < 0 || score > 100) {
+            System.out.println("Invalid score. Please enter a score between 0 and 100.");
+        } else if (score < 35) {
+            System.out.println("Result: Fail");
+        } else if (score < 50) {
+            System.out.println("Result: Pass");
+        } else if (score < 60) {
+            System.out.println("Result: Second Class");
+        } else if (score < 75) {
+            System.out.println("Result: First Class");
+        } else {
+            System.out.println("Result: Distinction");
+        }
+    }
+}
+
+Q_6
+public class Main {
+    public static void main(String[] args) {
+        
+        for (int num = 3; num <= 30; num++) {
+            if (isPrime(num)) {
+                System.out.println(num);
+            }
+        }
+    }
+    
+    public static boolean isPrime(int number) {
+        if (number <= 1) {
+            return false;
+        }
+        
+        if (number <= 3) {
+            return true;
+        }
+        
+        if (number % 2 == 0 || number % 3 == 0) {
+            return false;
+        }
+        
+        for (int i = 5; i * i <= number; i += 6) {
+            if (number % i == 0 || number % (i + 2) == 0) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+}
+Q_7
+public class Main {
+    public static void main(String[] args) {
+        int rowCount = 3; 
+        int colCount = 3; 
+        
+        for (int i = 0; i < rowCount; i++) {
+            char a = (char) ('A' + i); 
+            for (int j = 0; j < colCount; j++) {
+                char b = (char) ('a' + j);
+                System.out.println(a + "  " + b);
+            }
+        }
+    }
+}
+Q_8
+i)
+public class Main{
+    public static void main(String[] args) {
+        int n = 5; 
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n - i; j++) {
+                System.out.print(" ");
+            }
+
+            for (int k = 1; k <= i; k++) {
+                System.out.print("* ");
+            }
+
+            System.out.println();
+        }
+    }
+}
+Q_9
+public class InvertedAsteriskPattern {
+    public static void main(String[] args) {
+        int n = 4; // Number of rows
+
+        for (int i = 0; i < n; i++) {
+            // Print leading spaces
+            for (int j = 0; j < i; j++) {
+                System.out.print("  "); // Two spaces for formatting
+            }
+
+            // Print asterisks
+            for (int k = 0; k < n - i; k++) {
+                System.out.print("* ");
+            }
+
+            // Move to the next line
+            System.out.println();
+        }
+    }
+}
+Q_10
+public class Main {
+    public static void main(String[] args) {
+        int n = 4; 
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n - i; j++) {
+                System.out.print(" ");
+            }
+
+            for (int k = 1; k <= 2 * i - 1; k++) {
+                System.out.print("*");
+            }
+
+            System.out.println();
+        }
+
+        for (int i = n - 1; i >= 1; i--) {
+Q_11
+public class Main {
+    public static void main(String[] args) {
+        
+        for (int num = 3; num <= 30; num++) {
+            if (isPrime(num)) {
+                System.out.println(num);
+            }
+        }
+    }
+    
+    public static boolean isPrime(int number) {
+        if (number <= 1) {
+            return false;
+        }
+        
+        if (number <= 3) {
+            return true;
+        }
+        
+        if (number % 2 == 0 || number % 3 == 0) {
+            return false;
+        }
+        
+        for (int i = 5; i * i <= number; i += 6) {
+            if (number % i == 0 || number % (i + 2) == 0) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+}
+
+//Arithmetic operator codes
+Q_13
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int num1 = scanner.nextInt();
+
+        int num2 = scanner.nextInt();
+
+        int sum = num1 + num2;
+        System.out.println("Sum: " + sum);
+
+        scanner.close();
+    }
+}
+
+Q_14
+import java.util.Scanner;
+
+public class Subtraction {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        double num1 = scanner.nextDouble();
+
+        double num2 = scanner.nextDouble();
+
+        double difference = num1 - num2;
+        System.out.println("Difference: " + difference);
+
+        scanner.close();
+    }
+}
+
+Q_15
+import java.util.Scanner;
+
+public class Multiplication {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        double num1 = scanner.nextDouble();
+
+        double num2 = scanner.nextDouble();
+
+        double product = num1 * num2;
+        System.out.println("Product: " + product);
+
+        scanner.close();
+    }
+}
+Q_16
+import java.util.Scanner;
+
+public class Division {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        double num1 = scanner.nextDouble();
+
+        double num2 = scanner.nextDouble();
+
+        if (num2 != 0) {
+            double quotient = num1 / num2;
+            System.out.println("Quotient: " + quotient);
+        } else {
+            System.out.println("Error: Division by zero is not allowed.");
+        }
+
+        scanner.close();
+    }
+}
+Q_17
+import java.util.Scanner;
+
+public class CompareNumbers {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        double num1 = scanner.nextDouble();
+
+        double num2 = scanner.nextDouble();
+
+        if (num1 > num2) {
+            System.out.println("First number is greater.");
+        } else if (num2 > num1) {
+            System.out.println("Second number is greater.");
+        } else {
+            System.out.println("Both numbers are equal.");
+        }
+
+        scanner.close();
+    }
+}
+Q_18
+import java.util.Scanner;
+
+public class DivisibleBy3 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int num = scanner.nextInt();
+        if (num % 3 == 0) {
+            System.out.println(num + " is divisible by 3.");
+        } else {
+            System.out.println(num + " is not divisible by 3.");
+        }
+
+        scanner.close();
+    }
+}
+
+
+
+

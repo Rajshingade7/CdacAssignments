@@ -1,0 +1,194 @@
+[15-10-2023 17:14] : class MyCalcApp extends Exception {
+	public MyCalcApp(String s) {
+		super(s);
+	}
+
+}
+class Calculator3{
+	public static int caldouble(int k) throws MyCalcApp {
+		if(k==0) {
+			throw new MyCalcApp("Zero not allowed");
+		}
+		else if(k<0) {
+			throw new MyCalcApp("negative not allowed");
+		}
+		return 2*k;
+		
+		
+	}
+}
+[15-10-2023 17:14] : public class MyCalcApp1 {
+
+	public static void main(String[] args) {
+		try {
+			System.out.println(			Calculator3.caldouble(5));
+		} catch (MyCalcApp e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}
+*
+**
+*
+*
+*
+*
+
+[15-10-2023 17:15] : class NumberNotDivisibleBySevenException extends Exception{
+	NumberNotDivisibleBySevenException(String mess){
+		super(mess);
+	}
+}
+class Mymath{
+	public void disp(int num) throws NumberNotDivisibleBySevenException {
+		if(num%7==0) {
+			throw new NumberNotDivisibleBySevenException("This nuber is not divisible by 7");
+		}
+		else {
+			System.out.println(num);
+		}
+	}
+}
+public class Demo {
+
+	public static void main(String[] args) {
+		Mymath m=new Mymath();
+		try {
+			m.disp(7);
+		} catch (NumberNotDivisibleBySevenException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			m.disp(9);
+		} catch (NumberNotDivisibleBySevenException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+}
+*
+*
+*
+*
+*
+[15-10-2023 17:15] : import java.util.Scanner;
+
+class MyException extends Exception{
+	MyException(String mess){
+	super(mess);
+	}
+}
+public class Demo1 {
+	public static void show1() {
+		try {
+			show2();
+		} catch (MyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public static void show2()throws MyException {
+		show3();
+		
+		
+	}
+	public static void show3()throws MyException {
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		if(n>10) {
+			throw new MyException("number is greater than 10");
+			
+		}
+		else {
+			System.out.println(n);
+		}
+		
+		
+	}
+	public static void main(String[] args) {
+		show1();
+		
+		
+	}
+
+}
+*
+*
+*
+*
+*
+[15-10-2023 17:15] : class InvalidLengthException extends Exception{
+	InvalidLengthException(String mess){
+		super(mess);
+	}
+}
+class Authenticator {
+	Authenticator(String p) throws InvalidLengthException{
+		if(p.length()<5||p.length()>9) {
+			throw new InvalidLengthException("Invalid length of the passoword");
+			
+		}
+	}
+	public void done() {
+		System.out.println("successful Authentication");
+	}
+}
+public class Demo2 {
+
+	public static void main(String[] args) {
+		try {
+			Authenticator a=new Authenticator("Hello");
+			a.done();
+		} catch (InvalidLengthException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+	}
+
+}
+
+*
+*
+*
+*
+*
+[15-10-2023 17:16] : class ResourceNotAllocatedException extends Exception{
+	ResourceNotAllocatedException(String mess){
+		super(mess);
+	}
+}
+class MyResource implements AutoCloseable{
+	public MyResource(int capacity)throws ResourceNotAllocatedException{
+		if(capacity>100) {
+			throw new ResourceNotAllocatedException("not sufficient space");
+		}
+	}
+	void disp() {
+		System.out.println("successful");
+	}
+	
+	public void close() throws Exception {
+		
+	}
+	
+}
+public class Demo4 {
+
+	public static void main(String[] args) {
+		try {
+			MyResource m=new MyResource(101);
+			m.disp();
+		} catch (ResourceNotAllocatedException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+}

@@ -1,0 +1,48 @@
+
+/**
+ * 
+ */
+package devpro;
+
+/**
+ * 
+ */
+public class Myclass {
+
+	int num;
+
+	/**
+	 * @return the num
+	 */
+	public int getNum() {
+		return num;
+	}
+
+	/**
+	 * @param num the num to set
+	 */
+	public void setNum(int num) {
+		this.num = num;
+	}
+	
+}
+
+
+
+
+
+
+
+.......................................
+package clientapp;
+import devpro.Myclass;
+public class myclient {
+
+	public static void main(String[] args) {
+		
+		 Myclass m1= new  Myclass();
+		 m1.setNum(100);
+		 System.out.println(m1.getNum());
+	}
+
+}

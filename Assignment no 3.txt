@@ -1,0 +1,101 @@
+
+package devpro;
+//class 1
+/**
+ * @author Shubham Badhe
+ *
+ */
+public class First {
+	int num1;
+	int num2;
+	/**
+	 * @return the num1
+	 */
+	public int getNum1() {
+		return num1;
+	}
+	/**
+	 * @param num1 the num1 to set
+	 */
+	public void setNum1(int num1) {
+		this.num1 = num1;
+	}
+	/**
+	 * @return the num2
+	 */
+	public int getNum2() {
+		return num2;
+	}
+	/**
+	 * @param num2 the num2 to set
+	 */
+	public void setNum2(int num2) {
+		this.num2 = num2;
+	}
+	public int add() {
+		int result=this.num1+this.num2;
+		return result;
+	}
+}
+
+//class 2
+/**
+ * 
+ */
+package devpro;
+
+/**
+ * @author Shubham Badhe
+ *
+ */
+public class Secound {
+	int num3;
+	int num4;
+	/**
+	 * @return the num3
+	 */
+	public int getNum3() {
+		return num3;
+	}
+	/**
+	 * @param num3 the num3 to set
+	 */
+	public void setNum3(int num3) {
+		this.num3 = num3;
+	}
+	/**
+	 * @return the num4
+	 */
+	public int getNum4() {
+		return num4;
+	}
+	/**
+	 * @param num4 the num4 to set
+	 */
+	public void setNum4(int num4) {
+		this.num4 = num4;
+	}
+	public int substract() {
+		int sub = this.num3-this.num4;
+		return sub;
+	}
+}
+
+
+
+//client side code 
+package clientpro;
+import devpro.*;
+public class ClientApp {
+
+	public static void main(String[] args) {
+		First f1 = new First();
+		Secound s2 = new Secound();
+		f1.setNum1(10);
+		f1.setNum2(20);
+		System.out.println("Addition ="+f1.add());
+		s2.setNum3(100);
+		s2.setNum4(50);
+		System.out.println("Substraction ="+s2.substract());
+	}
+}

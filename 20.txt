@@ -1,0 +1,45 @@
+1.
+ select * from emp where sal >=5000;
+
+2.
+select sum(sal),max(sal),min(Sal),avg(sal),dname from emp e,dept d where e.deptno=d.deptno group by e.deptno;
+
+3. select * from (select ename,sal, row_number() over ( order by sal ) as r from emp)as rn where r=3;
+
+4.  1.select sal from (select sal,ename ,row_number() over (order by sal desc) as r from emp )as e where r=1;
+    2.select sal from emp order by sal desc limit 1;
+    3. select * from emp where sal< (select max(Sal) from emp ) order by sal desc limit 1 offset 2;
+
+5.
+select *, timestampdiff(year,'1981-07-01','1998-07-31');
+select *,timestampdiff(year,'dob','doj') from emp 
+6.
+select * from emp where date_format(hiredate,'%M') like "_a%";
+7.
+ select e.ename,e.empno, d.dname from emp e,dept d where d.deptno=e.deptno;
+8.
+ select e.ename,e.empno, d.dname from emp e,dept d where d.deptno=e.deptno;
+9.
+ select distinct deptno, dname,location from dept;;
+10.
+
+11.
+select * from emp where deptno =10 and deptno <>20;
+
+12.
+select * from emp where job in("clerk","analyst") order by sal desc;
+
+13.
+select * from emp where job not in("president","manager") order by sal;
+
+14.
+select * from emp where job in (select job from emp where ename="scott");
+
+15.
+ select * from emp where hiredate <(select hiredate from emp where ename="scott");
+
+16.
+update emp set geneder ="m" where gender="f";
+update emp set geneder ="f" where gender="m";
+
+17.

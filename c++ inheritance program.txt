@@ -1,0 +1,4579 @@
+inheritance all program
+
+redefination=>
+1)
+#include<iostream>
+using namespace std;
+class base
+{
+public:
+	void disp()
+	{
+		cout<<"base disp"<<endl;
+	}
+};
+class sub:public base
+{
+public:
+	void disp() // redefinition
+	{
+		cout<<"sub disp"<<endl;
+	}
+};
+void main()
+{
+	sub s;
+	s.disp(); // sub disp
+}
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2)
+#include<iostream>
+using namespace std;
+class base
+{
+public:
+	void disp()
+	{
+		cout<<"base disp"<<endl;
+	}
+};
+class sub:public base
+{
+public:
+	void disp() // redefinition
+	{
+		cout<<"sub disp"<<endl;
+	}
+};
+void main()
+{
+	sub s;
+	s.disp(); // sub disp
+	s.base::disp();  // base disp
+}
+
+
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3)
+#include<iostream>
+using namespace std;
+class base
+{
+public:
+	void disp()
+	{
+		cout<<"base disp"<<endl;
+	}
+};
+class sub:public base
+{
+public:
+	/*void disp(int k) // what if we give diff arg
+	{
+		cout<<"sub disp"<<endl;
+	}*/
+};
+void main()
+{
+	sub s;
+//	s.disp(); // Error
+	s.base::disp();  // base disp
+}
+
+
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+4)
+#include<iostream>
+using namespace std;
+class base
+{
+public:
+	void disp(int k)
+	{
+		cout<<"base disp with arg"<<endl;
+	}
+};
+class sub:public base
+{
+public:
+	void disp() // what if we give diff arg
+	{
+		cout<<"sub disp w/o arg"<<endl;
+	}
+};
+void main()
+{
+	sub s;
+	s.disp(); // sub disp
+//	s.disp(10); // error
+	s.base::disp(10); // base disp
+}
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+5)#include<iostream>
+using namespace std;
+class base
+{
+public:
+	void disp()
+	{
+		cout<<"base disp"<<endl;
+	}
+};
+class sub:public base
+{
+public:
+	void disp(int k) // what if we give diff arg
+	{
+		cout<<"sub disp"<<endl;
+	}
+};
+void main()
+{
+	sub s;
+//	s.disp(); // Error
+	s.disp(10); // works
+	s.base::disp();  // base disp
+}
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+6)
+
+#include<iostream>
+using namespace std;
+class base
+{
+public:
+	void disp()
+	{
+		cout<<"base disp with arg"<<endl;
+	}
+};
+class sub:public base
+{
+public:
+	void disp() // what if we give diff arg
+	{
+		cout<<"sub disp w/o arg"<<endl;
+		base::disp(); // invoke base disp
+	}
+};
+void main()
+{
+	sub s;
+	s.disp(); // sub disp
+
+	s.base::disp(); // base disp
+}
+
+op=>
+sub disp w/o arg
+base disp with arg
+base disp with arg
++++++============================================================================================================================================================================================================================================================
+
+
+
+
+
+multilevel=>
+
+1)
+#include<iostream>
+using namespace std;
+class base
+{
+private:
+		int num1;
+protected:
+		int var;
+public:
+	void disp1()
+	{
+		cout<<num1<<"\t"<<var<<endl;
+	}
+	base(int num1)
+	{
+		this->num1=num1;
+		var=100;
+		cout<<"base param"<<endl;
+	}
+	~base()
+	{
+		cout<<"base destr"<<endl;
+	}
+}; 
+class sub1:protected base
+{
+private:
+	int num2;
+public:
+	sub1():base(0)
+	{
+		cout<<"sub1 no-arg constr"<<endl;
+	}
+	void disp2()
+	{
+		disp1();
+		cout<<num2<<endl;
+		cout<<"var is\t"<<var<<endl; // var will come as private
+	}
+	~sub1()
+	{
+		cout<<"sub1 destr"<<endl;
+	}
+};
+class sub2:sub1
+{
+private:
+	int num3;
+public:
+	sub2(int num3)
+	{
+		this->num3=num3;
+		cout<<"sub2 param constr"<<endl;
+	}
+	void disp3()
+	{
+		cout<<num3<<endl;
+		cout<<var<<endl;
+		disp1();
+		disp2();
+	}
+	~sub2()
+	{
+		cout<<"sub2 destr"<<endl;
+	}
+};
+class sub3:public sub2
+{
+private:
+	int num4;
+public:
+	sub3():sub2(6)
+	{
+		this->num4=num4;
+		cout<<"sub3 param constr"<<endl;
+	}
+	void disp4()
+	{
+		cout<<num4<<endl;
+	}
+	~sub3()
+	{
+		cout<<"sub3 destr"<<endl;
+	}
+};
+int main()
+{
+	sub3 s; 
+	s.disp3();
+	s.disp4();
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+/*base param
+sub1 no-arg constr
+sub2 param constr
+sub3 param constr
+6
+100
+0       100
+0       100
+0
+var is  100
+0
+sub3 destr
+sub2 destr
+sub1 destr
+base destr
+
+
+
+*/
+
+============================================================================================================================================================================================
+Multiple=>
+
+1)
+
+/* in multiple inheritance constructors are invoked in the order of
+inheritance*/
+
+#include<iostream>
+using namespace std;
+class base1
+{
+private:
+		int num1;
+public:
+	void disp1()
+	{
+		cout<<num1<<endl;
+	}
+	base1()
+	{
+		cout<<"base1 no-arg"<<endl;
+	}
+	~base1()
+	{
+		cout<<"base1 destr"<<endl;
+	}
+}; 
+class base2
+{
+private:
+		int num2;
+public:
+	void disp2()
+	{
+		cout<<num2<<endl;
+	}
+	base2()
+	{
+		cout<<"base2 no-arg"<<endl;
+	}
+	~base2()
+	{
+		cout<<"base2 destr"<<endl;
+	}
+}; 
+class base3
+{
+private:
+		int num3;
+public:
+	void disp3()
+	{
+		cout<<num3<<endl;
+	}
+	base3()
+	{
+		cout<<"base3 no-arg"<<endl;
+	}
+	~base3()
+	{
+		cout<<"base3 destr"<<endl;
+	}
+}; 
+class sub:base1,public base2,protected base3
+{
+private:
+	int num4;
+public:
+	sub()
+	{
+		cout<<"sub no-arg constr"<<endl;
+	}
+	void disp4()
+	{
+		disp1();
+		disp3();
+		cout<<num4<<endl;
+	}
+	~sub()
+	{
+		cout<<"sub destr"<<endl;
+	}
+};
+
+int main()
+{
+	sub s;
+	s.disp2();
+	s.disp4();
+	return 0;
+}
+
+op=>
+base1 no-arg
+base2 no-arg
+base3 no-arg
+sub no-arg constr
+0
+ 0
+0
+0
+sub destr
+base3 destr
+base2 destr
+base1 destr
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2)
+
+#include<iostream>
+using namespace std;
+class base1
+{
+private:
+		int num1;
+public:
+	void disp1()
+	{
+		cout<<num1<<endl;
+	}
+	base1(int num1)
+	{
+		this->num1=num1;
+		cout<<"base1 param"<<endl;
+	}
+	~base1()
+	{
+		cout<<"base1 destr"<<endl;
+	}
+}; 
+class base2
+{
+private:
+		int num2;
+public:
+	void disp2()
+	{
+		cout<<num2<<endl;
+	}
+	base2()
+	{
+		cout<<"base2 no-arg"<<endl;
+	}
+	~base2()
+	{
+		cout<<"base2 destr"<<endl;
+	}
+}; 
+class base3
+{
+private:
+		int num3;
+public:
+	void disp3()
+	{
+		cout<<num3<<endl;
+	}
+	base3(int num3)
+	{
+		this->num3=num3;
+		cout<<"base3 param"<<endl;
+	}
+	~base3()
+	{
+		cout<<"base3 destr"<<endl;
+	}
+}; 
+class sub:base1,public base2,protected base3
+{
+private:
+	int num4;
+public:
+	sub():base1(10),base3(50)
+	{
+		cout<<"sub no-arg constr"<<endl;
+	}
+	void disp4()
+	{
+		disp1();
+		disp3();
+		cout<<num4<<endl;
+	}
+	~sub()
+	{
+		cout<<"sub destr"<<endl;
+	}
+};
+
+int main()
+{
+	sub s;
+	s.disp2();
+	s.disp4();
+	return 0;
+}
+
+
+/*base1 param
+base2 no-arg
+base3 param
+sub no-arg constr
+0
+10
+50
+0
+sub destr
+base3 destr
+base2 destr
+base1 destr*/
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3)
+
+#include<iostream>
+using namespace std;
+class base1
+{
+private:
+		int num1;
+public:
+	void disp1()
+	{
+		cout<<num1<<endl;
+	}
+	base1(int num1)
+	{
+		this->num1=num1;
+		cout<<"base1 param"<<endl;
+	}
+	~base1()
+	{
+		cout<<"base1 destr"<<endl;
+	}
+}; 
+class base2
+{
+private:
+		int num2;
+public:
+	void disp2()
+	{
+		cout<<num2<<endl;
+	}
+	base2()
+	{
+		cout<<"base2 no-arg"<<endl;
+	}
+	~base2()
+	{
+		cout<<"base2 destr"<<endl;
+	}
+}; 
+class base3
+{
+private:
+		int num3;
+public:
+	void disp3()
+	{
+		cout<<num3<<endl;
+	}
+	base3(int num3)
+	{
+		this->num3=num3;
+		cout<<"base3 param"<<endl;
+	}
+	~base3()
+	{
+		cout<<"base3 destr"<<endl;
+	}
+}; 
+class sub:base1,public base2,protected base3
+{
+private:
+	int num4;
+public:
+	sub():base3(10),base1(50) // constructors are always invoked in inheritance order
+	{
+		cout<<"sub no-arg constr"<<endl;
+	}
+	void disp4()
+	{
+		disp1();
+		disp3();
+		cout<<num4<<endl;
+	}
+	~sub()
+	{
+		cout<<"sub destr"<<endl;
+	}
+};
+
+int main()
+{
+	sub s;
+	s.disp2();
+	s.disp4();
+	return 0;
+}
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4)
+#include<iostream>
+using namespace std;
+
+class base1
+{
+public:
+	void disp()
+	{
+		cout<<"base1 disp"<<endl;
+	}
+};
+class base2
+{
+public:
+	void disp()
+	{
+		cout<<"base2 disp"<<endl;
+	}
+};
+class sub:base1,base2
+{
+public:
+	void fun()
+	{
+		disp();  // Ambiguity
+		cout<<"fun"<<endl;
+	}
+};
+int main()
+{
+	sub s;
+	s.fun();
+	return 0;
+}
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+5)
+#include<iostream>
+using namespace std;
+
+class base1
+{
+public:
+	void disp()
+	{
+		cout<<"base1 disp"<<endl;
+	}
+};
+class base2
+{
+public:
+	void disp()
+	{
+		cout<<"base2 disp"<<endl;
+	}
+};
+class sub:base1,base2
+{
+public:
+	void fun()
+	{
+		base1::disp();
+		base2::disp();
+		cout<<"fun"<<endl;
+	}
+};
+int main()
+{
+	sub s;
+	s.fun();
+	return 0;
+}
+
+
+
+
+
+
+
+-----================================================================================================================================================================================================================================================================================================================================================
+
+single inheritance=>
+
+1)
+
+#include<iostream>
+using namespace std;
+class base
+{
+private:
+		int num1;
+public:
+	void disp1()
+	{
+		cout<<num1<<endl;
+	}
+};
+class sub:base
+{
+private:
+	int num2;
+public:
+	void disp2()
+	{
+		cout<<num2<<endl;
+	}
+};
+   
+int main()
+{
+	sub s;
+	s.disp2();
+	// s.disp1(); // error
+	return 0;
+}
+
+
+/*
+op=>
+
+0
+0
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2)
+
+#include<iostream>
+using namespace std;
+class base
+{
+private:
+		int num1;
+public:
+	void disp1()
+	{
+		cout<<num1<<endl;
+	}
+};
+class sub:base
+{
+private:
+	int num2;
+public:
+	void disp2()
+	{
+		disp1();
+		cout<<num2<<endl;
+	}
+};
+
+int main()
+{
+	sub s;
+	s.disp2();
+	
+	return 0;
+}
+
+
+/*
+op=>
+
+0
+0
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+3)
+#include<iostream>
+using namespace std;
+class base
+{
+private:
+		int num1;
+public:
+	void disp1()
+	{
+		cout<<num1<<endl;
+	}
+	base()
+	{
+		cout<<"base no-arg"<<endl;
+	}
+	~base()
+	{
+		cout<<"base destr"<<endl;
+	}
+};
+class sub:base
+{
+private:
+	int num2;
+public:
+	sub()
+	{
+		cout<<"sub no-arg"<<endl;
+	}
+	void disp2()
+	{
+		disp1();
+		cout<<num2<<endl;
+	}
+	~sub()
+	{
+		cout<<"sub destr"<<endl;
+	}
+};
+
+int main()
+{
+	sub s;
+	s.disp2();
+	return 0;
+}
+
+
+
+
+/*
+op=>
+
+0
+0
+*/
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+4)
+#include<iostream>
+using namespace std;
+class base
+{
+private:
+		int num1;
+public:
+	void disp1()
+	{
+		cout<<num1<<endl;
+	}
+	base(int num1)
+	{
+		this->num1=num1;
+		cout<<"base param"<<endl;
+	}
+	~base()
+	{
+		cout<<"base destr"<<endl;
+	}
+}; 
+class sub:base
+{
+private:
+	int num2;
+public:
+	sub()
+	{
+		cout<<"sub no-arg"<<endl;
+	}
+	void disp2()
+	{
+		disp1();
+		cout<<num2<<endl;
+	}
+	~sub()
+	{
+		cout<<"sub destr"<<endl;
+	}
+};
+
+int main()
+{
+	sub s; // base does not have no-arg constru
+	s.disp2();
+	return 0;
+}
+
+
+
+
+/*
+op=>
+
+0
+0
+
+
+*/
+
+
+---------------------------------------------------------------------------------------------------------------------------------------
+5)
+#include<iostream>
+using namespace std;
+class base
+{
+private:
+		int num1;
+public:
+	void disp1()
+	{
+		cout<<num1<<endl;
+	}
+	base(int num1)
+	{
+		this->num1=num1;
+		cout<<"base param"<<endl;
+	}
+	~base()
+	{
+		cout<<"base destr"<<endl;
+	}
+}; 
+class sub:base
+{
+private:
+	int num2;
+public:
+	sub():base(10) // invoking param constr of base explicitly
+	{
+		cout<<"sub no-arg"<<endl;
+	}
+	void disp2()
+	{
+		disp1();
+		cout<<num2<<endl;
+	}
+	~sub()
+	{
+		cout<<"sub destr"<<endl;
+	}
+};
+
+int main()
+{
+	sub s; 
+	s.disp2();
+	return 0;
+}
+
+/*
+0
+sub destr
+base destr
+*/
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+6)
+/* if parent class does not have no-arg constructor,
+all the constructors of child class should invoke the 
+parameterized constructor of parent explicitly.
+*/
+
+#include<iostream>
+using namespace std;
+class base
+{
+private:
+		int num1;
+public:
+	void disp1()
+	{
+		cout<<num1<<endl;
+	}
+	base(int num1)
+	{
+		this->num1=num1;
+		cout<<"base param"<<endl;
+	}
+	~base()
+	{
+		cout<<"base destr"<<endl;
+	}
+}; 
+class sub:base
+{
+private:
+	int num2;
+public:
+	sub():base(10)
+	{
+		cout<<"sub no-arg"<<endl;
+	}
+	sub(int num2) // Error
+	{
+		this->num2=num2;
+	}
+	void disp2()
+	{
+		disp1();
+		cout<<num2<<endl;
+	}
+	~sub()
+	{
+		cout<<"sub destr"<<endl;
+	}
+};
+
+int main()
+{
+	sub s; // base does not have no-arg constru
+	s.disp2();
+	return 0;
+}
+-----------------------------------------------------------------------------------------------------------------------------------------
+7)
+/* if parent class does not have no-arg constructor,
+all the constructors of child class should invoke the 
+parameterized constructor of parent explicitly.
+*/
+
+#include<iostream>
+using namespace std;
+class base
+{
+private:
+		int num1;
+public:
+	void disp1()
+	{
+		cout<<num1<<endl;
+	}
+	base(int num1)
+	{
+		this->num1=num1;
+		cout<<"base param"<<endl;
+	}
+	~base()
+	{
+		cout<<"base destr"<<endl;
+	}
+}; 
+class sub:base
+{
+private:
+	int num2;
+public:
+	sub():base(10)
+	{
+		cout<<"sub no-arg"<<endl;
+	}
+	sub(int num2):base(20)
+	{
+		this->num2=num2;
+	}
+	void disp2()
+	{
+		disp1();
+		cout<<num2<<endl;
+	}
+	~sub()
+	{
+		cout<<"sub destr"<<endl;
+	}
+};
+
+int main()
+{
+	sub s; 
+	s.disp2();
+	return 0;
+}
+
+
+/*
+base param
+sub no-arg
+10
+0
+sub destr
+base destr
+
+*/
+----------------------------------------------------------------------------------------------------------------------------------------
+8)
+/* if parent class does not have no-arg constructor,
+all the constructors of child class should invoke the 
+parameterized constructor of parent explicitly.
+*/
+
+#include<iostream>
+using namespace std;
+class base
+{
+private:
+		int num1;
+public:
+	void disp1()
+	{
+		cout<<num1<<endl;
+	}
+	base(int num1)
+	{
+		this->num1=num1;
+		cout<<"base param"<<endl;
+	}
+	~base()
+	{
+		cout<<"base destr"<<endl;
+	}
+}; 
+class sub:protected base
+{
+private:
+	int num2;
+public:
+	sub():base(10)
+	{
+		cout<<"sub no-arg"<<endl;
+	}
+	sub(int num2):base(20)
+	{
+		this->num2=num2;
+	}
+	void disp2()
+	{
+		disp1();
+		cout<<num2<<endl;
+	}
+	~sub()
+	{
+		cout<<"sub destr"<<endl;
+	}
+};
+
+int main()
+{
+	sub s;
+	s.disp2();
+	return 0;
+}
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+9)'
+/* if parent class does not have no-arg constructor,
+all the constructors of child class should invoke the 
+parameterized constructor of parent explicitly.
+*/
+
+#include<iostream>
+using namespace std;
+class base
+{
+private:
+		int num1;
+public:
+	void disp1()
+	{
+		cout<<num1<<endl;
+	}
+	base(int num1)
+	{
+		this->num1=num1;
+		cout<<"base param"<<endl;
+	}
+	~base()
+	{
+		cout<<"base destr"<<endl;
+	}
+}; 
+class sub:public base
+{
+private:
+	int num2;
+public:
+	sub():base(10)
+	{
+		cout<<"sub no-arg"<<endl;
+	}
+	sub(int num2):base(20)
+	{
+		this->num2=num2;
+	}
+	void disp2()
+	{
+		cout<<num2<<endl;
+	}
+	~sub()
+	{
+		cout<<"sub destr"<<endl;
+	}
+};
+
+int main()
+{
+	sub s; 
+	s.disp2();
+	s.disp1();
+	return 0;
+}
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+10)
+#include<iostream>
+using namespace std;
+class base
+{
+private:
+		int num1;
+public:
+	void disp1()
+	{
+		cout<<num1<<endl;
+	}
+	base(int num1)
+	{
+		this->num1=num1;
+		cout<<"base param"<<endl;
+	}
+	~base()
+	{
+		cout<<"base destr"<<endl;
+	}
+}; 
+class sub1:public base
+{
+private:
+	int num2;
+public:
+	void disp2()
+	{
+		cout<<num2<<endl;
+	}
+	~sub1()
+	{
+		cout<<"sub1 destr"<<endl;
+	}
+};
+int main()
+{
+	sub1 s;  // error
+	s.disp2();
+	s.disp1();
+	return 0;
+}
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+11)
+#include<iostream>
+using namespace std;
+class base
+{
+private:
+		int num1;
+public:
+	void disp1()
+	{
+		cout<<num1<<endl;
+	}
+	base(int num1)
+	{
+		this->num1=num1;
+		cout<<"base param"<<endl;
+	}
+	~base()
+	{
+		cout<<"base destr"<<endl;
+	}
+}; 
+class sub1:public base
+{
+private:
+	int num2;
+public:
+	sub1():base(0)
+	{
+		cout<<"sub1 no-arg constr"<<endl;
+	}
+	void disp2()
+	{
+		cout<<num2<<endl;
+	}
+	~sub1()
+	{
+		cout<<"sub1 destr"<<endl;
+	}
+};
+int main()
+{
+	sub1 s; 
+	s.disp2();
+	s.disp1();
+	return 0;
+}
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+12)
+#include<iostream>
+using namespace std;
+class base
+{
+private:
+		int num1;
+protected:
+		int var;
+public:
+	void disp1()
+	{
+		cout<<num1<<"\t"<<var<<endl;
+	}
+	base(int num1)
+	{
+		this->num1=num1;
+		var=100;
+		cout<<"base param"<<endl;
+	}
+	~base()
+	{
+		cout<<"base destr"<<endl;
+	}
+}; 
+class sub1:base
+{
+private:
+	int num2;
+public:
+	sub1():base(0)
+	{
+		cout<<"sub1 no-arg constr"<<endl;
+	}
+	void disp2()
+	{
+		cout<<num2<<endl;
+		cout<<"var is\t"<<var<<endl; // var will come as private
+	}
+	~sub1()
+	{
+		cout<<"sub1 destr"<<endl;
+	}
+};
+int main()
+{
+	sub1 s; 
+	s.disp2();
+	//s.disp1();
+	return 0;
+}
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+composition =>
+#include<iostream>
+using namespace std;
+class Room
+{
+private:
+	char* name;
+public:
+	Room(char* name)
+	{
+		this->name = new char[strlen(name) + 1];
+		strcpy_s(this->name, strlen(name) + 1, name);
+	}
+	Room()
+	{
+		name = NULL;
+	}
+	void setName(char* name)
+	{
+		this->name = new char[strlen(name) + 1];
+		strcpy_s(this->name, strlen(name) + 1, name);
+	}
+	char* getName()
+	{
+		return name;
+	}
+	~Room()
+	{
+		cout << name << " is destroyed" << endl;
+		delete name;
+	}
+};
+
+class House
+{
+private:
+	Room* rooms;
+	char* name;
+	char* address;
+	int no_rooms;
+public:
+	House(char* name, char* address, int no_rooms)
+	{
+		this->name = new char[strlen(name) + 1];
+		strcpy_s(this->name, strlen(name) + 1, name);
+		this->address = new char[strlen(address) + 1];
+		strcpy_s(this->address, strlen(address) + 1, address);
+		this->no_rooms = no_rooms;
+		this->rooms = new Room[no_rooms];
+		char rname[30];
+		for (int i = 0; i < no_rooms; i++)
+		{
+			cout << "enter room name" << endl;
+			cin.getline(rname, 30);
+			this->rooms[i].setName(rname);
+		}
+	}
+	char* getName()
+	{
+		return name;
+	}
+	char* getAddress()
+	{
+		return address;
+	}
+	void showRooms()
+	{
+		for (int i = 0; i < no_rooms; i++)
+		{
+			cout << rooms[i].getName() << endl;
+		}
+	}
+	~House()
+	{
+		cout << endl << "House destroyed" << endl;
+		delete name;
+		delete address;
+		delete[]rooms;
+	}
+};
+int main()
+{
+	char name[] = "Samrat Mansion";
+	char address[] = "Juhu,Mumbai";
+	House* house = new House(name,address , 4);
+	cout << house->getName();
+	cout << house->getAddress();
+	cout << "house has following rooms" << endl;
+	house->showRooms();
+	cout << "Lets renovate the house" << endl;
+	delete house;
+}
+
+
+
+==================================================================================================================================================================================================================================================================
+2)
+#include<iostream>
+using namespace std;
+class Teacher
+{
+private:
+	char* name;
+	int age;
+public:
+	Teacher(char* name, int age)
+	{
+		this->name = new char[strlen(name) + 1];
+		strcpy_s(this->name, strlen(name) + 1, name);
+		this->age = age;
+	}
+	char* getName()
+	{
+		return name;
+	}
+	int getAge()
+	{
+		return age;
+	}
+	~Teacher()
+	{
+		cout << "Teacher is removed" << endl;
+		delete name;
+	}
+	void work()
+	{
+		cout << "Teacher is working" << endl;
+	}
+};
+
+class Department
+{
+private:
+	Teacher* teacher;
+	char* dname;
+public:
+	Department(char* dname)
+	{
+		teacher = NULL;
+		this->dname = new char[strlen(dname) + 1];
+		strcpy_s(this->dname, strlen(dname) + 1, dname);
+	}
+	char* getDname()
+	{
+		return dname;
+	}
+	void addTeacher(Teacher& ref)
+	{
+		this->teacher = &ref;
+	}
+	void perform()
+	{
+		cout << "inside " << dname << " ";
+		teacher->work();
+	}
+	~Department()
+	{
+		cout << endl << "Department is getting close" << endl;
+		delete dname;
+	}
+};
+int main()
+{
+	char ch[] = "Abc";
+	char ch1[] = "Science Department";
+	char ch2[] = "Maths Department";
+	Department* scienceDepartment = new Department(ch1);
+	Department* mathsDepartment = new Department(ch2);
+	cout << scienceDepartment->getDname() << endl;
+	cout << mathsDepartment->getDname() << endl;
+	Teacher t1(ch, 35);
+	cout << t1.getName() << "\t" << t1.getAge() << endl;
+	mathsDepartment->addTeacher(t1);
+	mathsDepartment->perform();
+	cout << "Lets close the maths department" << endl;
+	delete mathsDepartment;
+	cout << t1.getName() << " still exists and can join some other department" << endl;
+	scienceDepartment->addTeacher(t1);
+	scienceDepartment->perform();
+	// ..... after some time ......
+	delete scienceDepartment;
+	cout << t1.getName() << " still exists and can join some other department" << endl;
+}
+=================================================================================================================================================================================================================
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#include<iostream>
+using namespace std;
+class base
+{
+private:
+		int num1;
+public:
+	void disp1()
+	{
+		cout<<num1<<endl;
+	}
+	base()
+	{
+		cout<<"base no-arg"<<endl;
+	}
+	~base()
+	{
+		cout<<"base destr"<<endl;
+	}
+};
+class sub:base
+{
+private:
+	int num2;
+public:
+	sub()
+	{
+		cout<<"sub no-arg"<<endl;
+	}
+	void disp2()
+	{
+		disp1();
+		cout<<num2<<endl;
+	}
+	~sub()
+	{
+		cout<<"sub destr"<<endl;
+	}
+};
+
+int main()
+{
+	sub s;
+	s.disp2();
+	return 0;
+}
+
+
+
+
+/*
+op=>
+
+0
+0
+
+
+*/
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+#include<iostream>
+using namespace std;
+class base
+{
+private:
+		int num1;
+public:
+	void disp1()
+	{
+		cout<<num1<<endl;
+	}
+	base()
+	{
+		cout<<"base no-arg"<<endl;
+	}
+	~base()
+	{
+		cout<<"base destr"<<endl;
+	}
+};
+class sub:base
+{
+private:
+	int num2;
+public:
+	sub()
+	{
+		cout<<"sub no-arg"<<endl;
+	}
+	void disp2()
+	{
+		disp1();
+		cout<<num2<<endl;
+	}
+	~sub()
+	{
+		cout<<"sub destr"<<endl;
+	}
+};
+
+int main()
+{
+	sub s;
+	s.disp2();
+	return 0;
+}
+
+
+
+
+
+
+/*
+op=>
+
+0
+sub destr
+base destr
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+============================================================================================================================================================================================================================================================================================================================================
+
+hybrid=>
+
+1)
+#include<iostream>
+using namespace std;
+class Gp
+{
+private:
+	int num1;
+public:
+	Gp()
+	{
+		cout<<"Gp no-arg constr"<<endl;
+	}
+	void disp1()
+	{
+		cout<<"Gp disp1"<<endl;
+	}
+	~Gp()
+	{
+		cout<<"Gp dest"<<endl;
+	}
+	
+};
+class P1:public Gp
+{
+private:
+	int num2;
+public:
+	P1()
+	{
+		cout<<"P1 no-arg const"<<endl;
+	}
+	~P1()
+	{
+		cout<<"P1 dest"<<endl;
+	}
+};
+class P2:public Gp
+{
+private:
+	int num3;
+public:
+	P2()
+	{
+		cout<<"P2 no-arg const"<<endl;
+	}
+	~P2()
+	{
+		cout<<"P2 dest"<<endl;
+	}
+};
+class child:public P1,public P2
+{
+private:
+	int num4;
+public:
+	child()
+	{
+		cout<<"child no-arg const"<<endl;
+	}
+	~child()
+	{
+		cout<<"child dest"<<endl;
+	}
+};
+void main()
+{
+	child c;
+	
+//	c.disp1(); // ambiguity error
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2)
+#include<iostream.h>
+class Gp
+{
+private:
+	int num1;
+public:
+	Gp()
+	{
+		cout<<"Gp no-arg constr"<<endl;
+	}
+	void disp1()
+	{
+		cout<<"Gp disp1"<<endl;
+	}
+	~Gp()
+	{
+		cout<<"Gp dest"<<endl;
+	}
+	
+};
+class P1:public Gp
+{
+private:
+	int num2;
+public:
+	P1()
+	{
+		cout<<"P1 no-arg const"<<endl;
+	}
+	~P1()
+	{
+		cout<<"P1 dest"<<endl;
+	}
+};
+class P2:public Gp
+{
+private:
+	int num3;
+public:
+	P2()
+	{
+		cout<<"P2 no-arg const"<<endl;
+	}
+	~P2()
+	{
+		cout<<"P2 dest"<<endl;
+	}
+};
+class child:public P1,public P2
+{
+private:
+	int num4;
+public:
+	child()
+	{
+		cout<<"child no-arg const"<<endl;
+	}
+	~child()
+	{
+		cout<<"child dest"<<endl;
+	}
+};
+void main()
+{
+	child c;
+	
+	c.P1::disp1();
+	c.P2::disp1();
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3)
+/* When two or more objects(parent1 and parent2) are derived from  a common base class (Grandparent) ,you can prevent multiple copies of the base class(Grandparent) from being present in an object (child)  derived from those objects(parent1 and parent2) by declaring the base class(Grandparent) as virtual,when it is inherited */
+#include<iostream>
+using namespace std;
+class Gp
+{
+private:
+	int num1;
+public:
+	Gp()
+	{
+		cout<<"Gp no-arg constr"<<endl;
+	}
+	void disp1()
+	{
+		cout<<"Gp disp1"<<endl;
+	}
+	~Gp()
+	{
+		cout<<"Gp dest"<<endl;
+	}
+	
+};
+class P1:public virtual Gp
+{
+private:
+	int num2;
+public:
+	P1()
+	{
+		cout<<"P1 no-arg const"<<endl;
+	}
+	~P1()
+	{
+		cout<<"P1 dest"<<endl;
+	}
+};
+class P2:virtual public Gp
+{
+private:
+	int num3;
+public:
+	P2()
+	{
+		cout<<"P2 no-arg const"<<endl;
+	}
+	~P2()
+	{
+		cout<<"P2 dest"<<endl;
+	}
+};
+class child:public P1,public P2
+{
+private:
+	int num4;
+public:
+	child()
+	{
+		cout<<"child no-arg const"<<endl;
+	}
+	~child()
+	{
+		cout<<"child dest"<<endl;
+	}
+};
+void main()
+{
+	child c;
+	
+	c.disp1();
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+hierarchial=>
+
+#include<iostream>
+using namespace std;
+class base
+{
+private:
+		int num1;
+protected:
+		int var;
+public:
+	void disp1()
+	{
+		cout<<num1<<"\t"<<var<<endl;
+	}
+	base(int num1)
+	{
+		this->num1=num1;
+		var=100;
+		cout<<"base param"<<endl;
+	}
+	~base()
+	{
+		cout<<"base destr"<<endl;
+	}
+}; 
+class sub1:protected base
+{
+private:
+	int num2;
+public:
+	sub1():base(0)
+	{
+		cout<<"sub1 no-arg constr"<<endl;
+	}
+	void disp2()
+	{
+		disp1();
+		cout<<num2<<endl;
+		cout<<"var is\t"<<var<<endl; // var will come as private
+	}
+	~sub1()
+	{
+		cout<<"sub1 destr"<<endl;
+	}
+};
+class sub2:base
+{
+private:
+	int num3;
+public:
+	sub2(int num3):base(30)
+	{
+		this->num3=num3;
+		cout<<"sub2 param constr"<<endl;
+	}
+	void disp3()
+	{
+		cout<<num3<<endl;
+		cout<<var<<endl;
+		disp1();
+	}
+	~sub2()
+	{
+		cout<<"sub2 destr"<<endl;
+	}
+};
+class sub3:public base
+{
+private:
+	int num4;
+public:
+	sub3():base(6)
+	{
+		this->num4=num4;
+		cout<<"sub3 param constr"<<endl;
+	}
+	void disp4()
+	{
+		cout<<num4<<endl;
+		cout<<var<<endl;
+	}
+	~sub3()
+	{
+		cout<<"sub3 destr"<<endl;
+	}
+};
+int main()
+{
+	sub1 s1;
+	s1.disp2();
+	sub2 s2(500);
+	s2.disp3();
+	sub3 s3;
+	s3.disp1();
+	s3.disp4();
+	return 0;
+}
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+abstraction=>
+
+1)
+#include<iostream>
+using namespace std;
+class Person
+{
+	public:
+		virtual void performDuties()=0;
+		void walk()
+		{
+			cout<<"walk"<<endl;
+		}
+		void talk()
+		{
+			cout<<"talk"<<endl;
+		}
+		void eat()
+		{
+			cout<<"eat"<<endl;
+		}
+		void sleep()
+		{
+			cout<<"sleep"<<endl;
+		}
+};
+class Soldier:public Person
+{
+	public:
+		void performDuties()
+		{
+			cout<<"fight"<<endl;
+		}
+
+};
+
+class Teacher:public Person
+{
+	public:
+		void performDuties()
+		{
+			cout<<"teach"<<endl;
+		}
+
+};
+
+class HouseWife:public Person
+{
+	public:
+		void performDuties()
+		{
+			cout<<"cook"<<endl;
+		}		
+};
+void perform(Person *p)
+{
+	p->performDuties();
+}
+int main()
+{
+	perform(new Teacher);
+	perform(new Soldier);
+}
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2)
+#include<iostream>
+using namespace std;
+class Person
+{
+	public:
+		virtual void performDuties()=0;
+		void walk()
+		{
+			cout<<"walk"<<endl;
+		}
+		void talk()
+		{
+			cout<<"talk"<<endl;
+		}
+		void eat()
+		{
+			cout<<"eat"<<endl;
+		}
+		void sleep()
+		{
+			cout<<"sleep"<<endl;
+		}
+};
+class Soldier:public Person
+{
+	public:
+		void performDuties()
+		{
+			cout<<"fight"<<endl;
+		}
+
+};
+
+class Teacher:public Person
+{
+	public:
+		void performDuties()
+		{
+			cout<<"teach"<<endl;
+		}
+
+};
+
+class HouseWife:public Person
+{
+	public:
+		void performDuties()
+		{
+			cout<<"cook"<<endl;
+		}		
+};
+void perform(Person &p)
+{
+	p.performDuties();
+}
+int main()
+{
+	Teacher t;
+	Soldier s;
+	perform(t);
+	perform(s);
+}
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+3)
+#include<iostream>
+using namespace std;
+class Person
+{
+	public:
+		virtual void performDuties()=0;
+		void walk()
+		{
+			cout<<"walk"<<endl;
+		}
+		void talk()
+		{
+			cout<<"talk"<<endl;
+		}
+		void eat()
+		{
+			cout<<"eat"<<endl;
+		}
+		void sleep()
+		{
+			cout<<"sleep"<<endl;
+		}
+};
+class Soldier:public Person
+{
+	public:
+		void performDuties()
+		{
+			cout<<"fight"<<endl;
+		}
+
+};
+
+class Teacher:public Person
+{
+	public:
+		void performDuties()
+		{
+			cout<<"teach"<<endl;
+		}
+
+};
+
+class HouseWife:public Person
+{
+	public:
+		void performDuties()
+		{
+			cout<<"cook"<<endl;
+		}		
+};
+
+int main()
+{
+	Person *arr[3]={new Teacher,new Soldier,new HouseWife};
+	for(int i=0;i<3;i++)
+	{
+		arr[i]->performDuties();
+	}
+
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+copy constructor
+
+1)
+
+// in this program copy constrctor of sub calls copy constructor of base class i.e. parent class.
+#include<iostream>
+using namespace std;
+class base
+{
+	int a;
+public:
+	base()
+	{
+		cout<<"in base def const"<<endl;
+		a=0;
+	}
+	base(int k)
+	{
+		cout<<"in base param const"<<endl;
+		a=k;
+	}
+	void disp1()
+	{
+		cout<<a<<endl;
+	}
+	base(base &ref)
+	{
+		cout<<"in base copy"<<endl;
+		a=ref.a;
+	}
+	~base()
+	{
+		cout<<"in base dest"<<endl;
+	}
+};
+class sub:public base
+{
+	int b;
+public:
+	sub(int k):base(4)
+	{
+		cout<<"in sub param const"<<endl;
+		b=k;
+	}
+	void disp2()
+	{
+		cout<<b<<endl;
+	}
+	~sub()
+	{
+		cout<<"in sub dest"<<endl;
+	}
+};
+int main()
+{
+	sub s1(10);
+	s1.disp1();
+	s1.disp2();
+
+	sub s2=s1;
+	s2.disp1();
+	s2.disp2();
+}
+
+
+/*in base param const
+in sub param const
+4
+10
+in base copy
+4
+10
+in sub dest
+in base dest
+in sub dest
+in base dest*/
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2)
+// in this program , explicitly provided copy constructor of sub , does not call the copy constructor of base, rather it calls default constructor of base.
+
+
+// in this program , explicitly provided copy constructor of sub , does not call the copy constructor of base, rather it calls default constructor of base.
+#include<iostream>
+using namespace std;
+class base
+{
+	int a;
+public:
+	base()
+	{
+		cout << "in base def const" << endl;
+		a = 0;
+	}
+	base(int k)
+	{
+		cout << "in base param const" << endl;
+		a = k;
+	}
+	void disp1()
+	{
+		cout << a << endl;
+	}
+	base(base& ref)
+	{
+		cout << "in base copy" << endl;
+		a = ref.a;
+	}
+	~base()
+	{
+		cout << "in base dest" << endl;
+	}
+};
+class sub :public base
+{
+	int b;
+public:
+	sub(int k) :base(4)
+	{
+		cout << "in sub param const" << endl;
+		b = k;
+	}
+	void disp2()
+	{
+		cout << b << endl;
+	}
+	sub(sub& ref)
+	{
+		cout << "in sub copy" << endl;
+		b = ref.b;
+	}
+	~sub()
+	{
+		cout << "in sub dest" << endl;
+	}
+};
+int main()
+{
+	sub s1(10);
+	s1.disp1();
+	s1.disp2();
+
+	sub s2 = s1;
+	s2.disp1();
+	s2.disp2();
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+3)
+// calling parent class copy const explicitly from child class
+
+#include<iostream>
+using namespace std;
+class base
+{
+	int a;
+public:
+	base()
+	{
+		cout<<"in base def const"<<endl;
+		a=0;
+	}
+	base(int k)
+	{
+		cout<<"in base param const"<<endl;
+		a=k;
+	}
+	void disp1()
+	{
+		cout<<a<<endl;
+	}
+	base(base &ref)
+	{
+		cout<<"in base copy"<<endl;
+		a=ref.a;
+	}
+	~base()
+	{
+		cout<<"in base dest"<<endl;
+	}
+};
+class sub:public base
+{
+	int b;
+public:
+	sub(int k):base(4)
+	{
+		cout<<"in sub param const"<<endl;
+		b=k;
+	}
+	void disp2()
+	{
+		cout<<b<<endl;
+	}
+	sub(sub &ref):base(ref)
+	{
+		cout<<"in sub copy"<<endl;
+		b=ref.b;
+	}
+	~sub()
+	{
+		cout<<"in sub dest"<<endl;
+	}
+};
+int main()
+{
+	sub s1(10);
+	s1.disp1();
+	s1.disp2();
+
+	sub s2=s1;
+	s2.disp1();
+	s2.disp2();
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4)
+// calling parent class copy const explicitly from child class
+#include<iostream>
+using namespace std;
+class base
+{
+	int a;
+public:
+	base()
+	{
+		cout<<"in base def const"<<endl;
+		a=0;
+	}
+	base(int k)
+	{
+		cout<<"in base param const"<<endl;
+		a=k;
+	}
+	void disp1()
+	{
+		cout<<a<<endl;
+	}
+
+	~base()
+	{
+		cout<<"in base dest"<<endl;
+	}
+};
+class sub:public base
+{
+	int b;
+public:
+	sub(int k):base(4)
+	{
+		cout<<"in sub param const"<<endl;
+		b=k;
+	}
+	void disp2()
+	{
+		cout<<b<<endl;
+	}
+	sub(sub &ref):base(ref)
+	{
+		cout<<"in sub copy"<<endl;
+		b=ref.b;
+	}
+	~sub()
+	{
+		cout<<"in sub dest"<<endl;
+	}
+};
+void main()
+{
+	sub s1(10);
+	s1.disp1();
+	s1.disp2();
+
+	sub s2=s1;
+	s2.disp1();
+	s2.disp2();
+}
+
+
+========================================================================================================================================================================================
+
+late binding=>
+
+1)
+#include<iostream>
+using namespace std;
+class Animal
+{
+public:
+	virtual void makeSound()
+	{
+	}
+};
+class Tiger :public Animal
+{
+public:
+	void makeSound()    // overriding makeSound() of Animal
+	{
+		cout << "roar" << endl;
+	}
+};
+class Dog :public Animal
+{
+public:
+	void makeSound()  // overriding makeSound() of Animal
+	{
+		cout << "bark" << endl;
+	}
+};
+class Cat :public Animal
+{
+public:
+	void makeSound()   // overriding makeSound() of Animal
+	{
+		cout << "meaw" << endl;
+	}
+};
+void perform(Animal* ptr)
+{
+	ptr->makeSound();
+}
+
+int main()
+{
+	perform(new Dog);
+	perform(new Tiger);
+	return 0;
+}
+
+
+----------------------------------------------------------------------------------------------------------------
+2)
+#include<iostream>
+using namespace std;
+class Animal
+{
+public:
+	virtual void makeSound()
+	{
+	}
+};
+class Tiger :public Animal
+{
+public:
+	void makeSound()    // overriding makeSound() of Animal
+	{
+		cout << "roar" << endl;
+	}
+};
+class Dog :public Animal
+{
+public:
+	void makeSound()  // overriding makeSound() of Animal
+	{
+		cout << "bark" << endl;
+	}
+};
+class Cat :public Animal
+{
+public:
+	void makeSound()   // overriding makeSound() of Animal
+	{
+		cout << "meaw" << endl;
+	}
+};
+void perform(Animal &ref)
+{
+	ref.makeSound();
+}
+
+int main()
+{
+	Dog d;
+	Cat c;
+	perform(d);
+	perform(c);
+	return 0;
+}
+
+
+----------------------------------------------------------------------------------------------------
+3)
+
+#include<iostream>
+using namespace std;
+class Animal
+{
+public:
+	virtual void makeSound()
+	{
+	}
+};
+class Tiger :public Animal
+{
+public:
+	void makeSound()    // overriding makeSound() of Animal
+	{
+		cout << "roar" << endl;
+	}
+};
+class Dog :public Animal
+{
+public:
+	void makeSound()  // overriding makeSound() of Animal
+	{
+		cout << "bark" << endl;
+	}
+};
+class Cat :public Animal
+{
+public:
+	void makeSound()   // overriding makeSound() of Animal
+	{
+		cout << "meaw" << endl;
+	}
+};
+
+int main()
+{
+	Animal *arr[3];
+	arr[0] = new Tiger;
+	arr[1] = new Dog;
+	arr[2] = new Cat;
+
+	for (int i = 0; i < 3; i++)
+	{
+		arr[i]->makeSound();
+	}
+	return 0;
+}
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------====================================================================================================================================================================================================================
+late binding=>
+
+1)
+/* In the following code, since the parent class method is virtual, while invoking method through a pointer, content of the pointer is considered. This happens during runtime. Hence it is called as "Late binding" or "Dynamic Polymorphism" or "Runtime Polymorphism".
+
+Note:- In C++ Late binding or Runtime Polymorphism can be achieved using
+
+	a) virtual functions
+	b) parent class pointer or reference
+
+*/
+
+#include<iostream>
+using namespace std;
+class base
+{
+public:
+	virtual void disp() // overridden
+	{
+		cout<<"base disp"<<endl;
+	}
+};
+class sub:public base
+{
+public:
+	void disp() // overriding 
+	{
+		cout<<"sub disp"<<endl;
+	}
+};
+
+int main()
+{
+	base *ptr=new base;
+	ptr->disp();  // content will be considered
+	ptr=new sub;    // upcasting
+	ptr->disp();  // content will be considered
+	return 0;
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+2)
+#include<iostream>
+using namespace std;
+class base
+{
+public:
+	virtual void disp() // overridden
+	{
+		cout<<"base disp"<<endl;
+	}
+};
+class sub:public base
+{
+public:
+	void disp() // overriding 
+	{
+		cout<<"sub disp"<<endl;
+	}
+};
+int main()
+{
+	base b1;
+	sub s1;
+	base &ref1=b1;
+	ref1.disp();  // referent will be considered
+	base &ref2=s1;  // upcasting
+	ref2.disp();  // referent will be considered
+	return 0;
+}
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+virtual=>
+
+#include<iostream>
+using namespace std;
+class base
+{
+public:
+	virtual void disp()
+	{
+		cout<<endl<<"in disp\n";
+	}
+	base()
+	{
+		cout<<endl<<"in base def.const\n";
+	}
+	~base()
+	{
+		cout<<endl<<"in base dest\n";
+	}
+};
+class sub:public base
+{
+public:
+	sub()
+	{
+		cout<<endl<<"in sub def.const\n";
+	}
+	~sub()
+	{
+		cout<<endl<<"in sub dest\n";
+	}
+	void disp()
+	{
+		cout<<endl<<"in disp of sub\n";
+	}
+};
+void main()
+{
+	base *b=new sub;
+	b->disp();
+	delete b; //it will invoke only destructor of base
+}
+
+
+
+
+
+
+
+
+
+
+op=>
+
+
+
+
+------------------------------------
+2)
+#include<iostream.h>
+/* A derived class destructor calls its base class destructor
+after the derived class destructor does everything else.
+If the base class needs no custom destruction,you still must
+provide a virtual destructor (with an empty block)to permit the
+proper destructor calls for dynamically allocated objects. */
+class base
+{
+public:
+	virtual void disp()
+	{
+		cout<<endl<<"in disp\n";
+	}
+	base()
+	{
+		cout<<endl<<"in base def.const\n";
+	}
+	virtual ~base()
+	{
+		cout<<endl<<"in base dest\n";
+	}
+};
+class sub:public base
+{
+public:
+	sub()
+	{
+		cout<<endl<<"in sub def.const\n";
+	}
+	~sub()
+	{
+		cout<<endl<<"in sub dest\n";
+	}
+	void disp()
+	{
+		cout<<endl<<"in disp of sub\n";
+	}
+};
+void main()
+{
+	base *b=new sub;
+	b->disp();
+	delete b; //it will invoke sub destructor and then of base
+}
+
+
+
+
+
+op=>
+
+-------------------------------------------------------------------------------------------------------------------
+
+3)
+#include<iostream>
+using namespace std;
+class base
+{
+public:
+	base()
+	{
+		disp();
+	}
+	virtual void disp()
+	{
+		cout<<"in base disp"<<endl;
+	}
+};
+class sub: public base
+{
+public:
+	void disp()
+	{
+		cout<<"in sub disp"<<endl;
+	}
+};
+void main()
+{
+	base *b=new sub;
+}
+
+/* assembly output */
+
+
+
+/*
+
+op=>
+
+
+*/
+
+------------------------------------------------------------
+
+4)#include<iostream>
+class base
+{
+public:
+	virtual void disp()
+	{
+		cout<<"in base disp"<<endl;
+	}
+	~base()
+	{
+		disp();
+	}
+};
+class sub: public base
+{
+public:
+	void disp()
+	{
+		cout<<"in sub disp"<<endl;
+	}
+};
+void main()
+{
+	base *b=new sub;
+	delete b;
+}
+
+
+op=>
+
+
+--------------------------------------------------------------------
+
+5)#include<iostream>
+using namespace std;
+class base
+{
+public:
+	void fun()
+	{
+		disp(); // late binding bec u r invoking virtual method
+	}
+	virtual void disp()
+	{
+		cout<<"in base disp"<<endl;
+	}
+};
+class sub: public base
+{
+public:
+	void disp()
+	{
+		cout<<"in sub disp"<<endl;
+	}
+};
+void main()
+{
+	base *b=new sub;
+	b->disp(); // late binding
+	b->fun(); // early binding
+	base b1;
+	b1.fun();// early binding
+
+}
+
+
+op=>
+
+-----------------------------------------------------------------------
+
+6)
+
+#include<iostream>
+#include<malloc.h>
+using namespace std;
+class base
+{
+public:
+	base()
+	{
+		cout<<"in base no-arg constr"<<endl;
+	}
+	virtual void disp()
+	{
+		cout<<"in base disp"<<endl;
+	}
+};
+class sub: public base
+{
+public:
+	sub()
+	{
+		cout<<"in sub no-arg costructor"<<endl;
+	}
+	void disp()
+	{
+		cout<<"in sub disp"<<endl;
+	}
+};
+void main()
+{
+	base *b=new sub;
+	b->disp(); // late binding
+}
+
+
+
+
+op=>
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+7)
+#include<iostream>
+using namespace std;
+class myclass
+{
+public:
+	virtual void disp1()
+	{
+		cout << endl << "in disp1\n";
+	}
+	virtual void disp2()
+	{
+		cout << endl << "in disp2\n";
+	}
+	void trial()
+	{
+		__int64 * ptr1 = (__int64 *)this;//address of the object
+		ptr1 = (__int64 *)*ptr1;//address of the VTABLE
+		ptr1 = (__int64 *)*ptr1;//address of the first virtual function
+		void (*fun1)();
+		fun1 = (void (*)())ptr1;
+		fun1();
+		__int64 * ptr2 = (__int64 *)this;//address of the object
+		ptr2 = (__int64 *)*ptr2;//address of the VTABLE
+		
+		ptr2++;//increment so that pointer will point to the next 
+		// 8 byte chunk
+		
+		ptr2 = (__int64*)*ptr2;//address of second virtual function
+		void (*fun2)();
+		fun2 = (void(*)())ptr2;
+		fun2();
+	}
+};
+int main()
+{
+	myclass m;
+	m.trial();
+}
+
+
+
+
+--------------------------------------------------------------------------------------------------------------
+8)
+#include<iostream>
+using namespace std;
+class base
+{
+public:
+	virtual void disp()
+	{
+		cout<<endl<<"in disp\n";
+	}
+	base()
+	{
+		cout<<endl<<"in base def.const\n";
+	}
+	~base()
+	{
+		cout<<endl<<"in base dest\n";
+	}
+};
+class sub:public base
+{
+public:
+	sub()
+	{
+		cout<<endl<<"in sub def.const\n";
+	}
+	~sub()
+	{
+		cout<<endl<<"in sub dest\n";
+	}
+	void disp()
+	{
+		cout<<endl<<"in disp of sub\n";
+	}
+};
+void main()
+{
+	base *b=new sub;
+	b->disp();
+	delete b; //it will invoke only destructor of base
+}
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+8)
+#include<iostream.h>
+/* A derived class destructor calls its base class destructor
+after the derived class destructor does everything else.
+If the base class needs no custom destruction,you still must
+provide a virtual destructor (with an empty block)to permit the
+proper destructor calls for dynamically allocated objects. */
+class base
+{
+public:
+	virtual void disp()
+	{
+		cout<<endl<<"in disp\n";
+	}
+	base()
+	{
+		cout<<endl<<"in base def.const\n";
+	}
+	virtual ~base()
+	{
+		cout<<endl<<"in base dest\n";
+	}
+};
+class sub:public base
+{
+public:
+	sub()
+	{
+		cout<<endl<<"in sub def.const\n";
+	}
+	~sub()
+	{
+		cout<<endl<<"in sub dest\n";
+	}
+	void disp()
+	{
+		cout<<endl<<"in disp of sub\n";
+	}
+};
+void main()
+{
+	base *b=new sub;
+	b->disp();
+	delete b; //it will invoke sub destructor and then of base
+}
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+9)
+
+#include<iostream>
+using namespace std;
+class base
+{
+public:
+	base()
+	{
+		disp();
+	}
+	virtual void disp()
+	{
+		cout<<"in base disp"<<endl;
+	}
+};
+class sub: public base
+{
+public:
+	void disp()
+	{
+		cout<<"in sub disp"<<endl;
+	}
+};
+void main()
+{
+	base *b=new sub;
+}
+
+add
+*/------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+9)
+#include<iostream>
+using namespace std;
+class base
+{
+public:
+	void fun()
+	{
+		disp(); // late binding bec u r invoking virtual method
+	}
+	virtual void disp()
+	{
+		cout<<"in base disp"<<endl;
+	}
+};
+class sub: public base
+{
+public:
+	void disp()
+	{
+		cout<<"in sub disp"<<endl;
+	}
+};
+void main()
+{
+	base *b=new sub;
+	b->disp(); // late binding
+	b->fun(); // early binding
+	base b1;
+	b1.fun();// early binding
+
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------
+operator overloading=>
+
+1)
+
+
+/*
+in the following program , +operator is inherited in sub,but =operator is not inherited. In sub class, compiler implicitly provides =operator, which will invoke parent class =operator.
+*/
+
+#include<iostream>
+using namespace std;
+
+class base
+{
+public:
+	void operator+(base &ref)
+	{
+		cout<<"\n base operator+\n";
+	}
+	void operator=(base &ref)
+	{
+		cout<<"\n in base operator=\n";
+	}
+};
+class sub:public base
+{
+};
+int main()
+{
+	base b1,b2;
+	b1+b2;
+	b1=b2;
+	sub s1,s2;
+	s1+s2;
+	s1=s2;
+}
+
+
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2)
+/*operator= doesn't inherit because it performs a constructor-like
+activity*/
+#include <iostream>
+using namespace std;
+class base
+{
+private:
+	int a;
+public:
+	base(int k)
+	{
+		a=k;
+	}
+	base()
+	{
+	}
+	int operator+(base &ref)
+	{
+		cout<<"in base opeator+"<<endl;
+		return a+ref.a;
+
+	}
+	void operator=(base &ref)
+	{
+		cout<<"in base operator="<<endl;
+		a=ref.a;
+	}
+	void disp()
+	{
+		cout<<"Value of a is\t"<<a<<endl;
+	}
+};
+class sub:public base
+{
+private:
+	int b;
+public:
+	sub(int k)
+	{
+		b=k;
+	}
+	void disp()
+	{
+		cout<<"Value of b is\t"<<b<<endl;
+	}
+};
+int main()
+{
+	base b1(10),b2(20);
+	sub s1(30),s2(40);
+	cout<<"b1+b2 is \t"<<b1+b2<<endl;
+	b1=b2;
+	b1.disp();
+	cout<<"s1+s2 is \t"<<s1+s2<<endl;
+	s1=s2;
+	s1.disp();
+
+}
+/*
+In the above code operator+ is inherited , that's why we get
+garbage value when we say "s1+s2"
+operator= is not inherited, compiler provides operator=  for sub
+class, which invokes parent class operator= function*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3)
+#include <iostream>
+using namespace std;
+class base
+{
+private:
+	int a;
+public:
+	base(int k)
+	{
+		a=k;
+	}
+	base()
+	{
+	}
+	void disp()
+	{
+		cout<<"Value of a is\t"<<a<<endl;
+	}
+};
+class sub:public base
+{
+private:
+	int b;
+public:
+	sub(int k,int l):base(l)
+	{
+		b=k;
+	}
+	void disp()
+	{
+		cout<<"Value of b is\t"<<b<<endl;
+	}
+};
+int main()
+{
+	sub s1(5,10),s2(15,20);
+	s1=s2;
+	s1.disp();
+	s1.base::disp();
+
+}
+
+/*Value of b is   15
+Value of a is   20*/
+
+/*in the above code, compiler provides operator=  for sub
+class, which invokes parent class operator= function*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+4)
+
+
+#include <iostream>
+using namespace std;
+class base
+{
+private:
+	int a;
+public:
+	base(int k)
+	{
+		a=k;
+	}
+	base()
+	{
+	}
+	void disp()
+	{
+		cout<<"Value of a is\t"<<a<<endl;
+	}
+};
+class sub:public base
+{
+private:
+	int b;
+public:
+	sub(int k,int l):base(l)
+	{
+		b=k;
+	}
+	void disp()
+	{
+		cout<<"Value of b is\t"<<b<<endl;
+	}
+	void operator=(sub &s)
+	{
+		cout<<"in operator= of sub"<<endl;
+		b=s.b;
+	}
+};
+int main()
+{
+	sub s1(5,10),s2(15,20);
+	s1=s2;
+	s1.disp();
+	s1.base::disp();
+
+}
+
+/*in the above code, explicitly provided  operator= of sub  does not invoke  parent class operator= function*/
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+5)
+#include <iostream>
+using namespace std;
+class base
+{
+private:
+	int a;
+public:
+	base(int k)
+	{
+		a=k;
+	}
+	base()
+	{
+	}
+	void disp()
+	{
+		cout<<"Value of a is\t"<<a<<endl;
+	}
+};
+class sub:public base
+{
+private:
+	int b;
+public:
+	sub(int k,int l):base(l)
+	{
+		b=k;
+	}
+	void disp()
+	{
+		cout<<"Value of b is\t"<<b<<endl;
+	}
+	void operator=(sub &s)
+	{
+		cout<<"in operator= of sub"<<endl;
+		b=s.b;
+		base::operator=(s);
+	}
+};
+int main()
+{
+	sub s1(5,10),s2(15,20);
+	s1=s2;
+	s1.disp();
+	s1.base::disp();
+
+}
+
+
+/*in operator= of sub
+Value of b is   15
+Value of a is   20
+*/
+
+/*in the above code, sub class operator= invokes
+ parent class operator= function*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+dynamic cast=>
+
+1)
+#include<iostream>
+using namespace std;
+
+class base
+{
+public:
+	virtual void disp()
+	{
+		cout<<"in base disp"<<endl;
+	}
+};
+class sub1:public base
+{
+public:
+	void disp()
+	{
+		cout<<"in sub1 disp"<<endl;
+	}
+};
+class sub2:public base
+{
+public:
+	void disp()
+	{
+		cout<<"in sub2 disp"<<endl;
+	}
+};
+int main()
+{
+	base *arr[2];
+	arr[0]=new sub1;
+	arr[1]=new sub2;
+
+	for(int i=0;i<2;i++)
+	{
+		if(dynamic_cast<sub2*>(arr[i]))
+		{
+			arr[i]->disp();
+		}
+	}
+}
+
+---------------------------------------------------------------------------------------========================================================================================================================================================================================================================================================
+
+1)
+#include<iostream>
+using namespace std;
+class base
+{
+public:
+	void disp() 
+	{
+		cout << "base disp" << endl;
+	}
+};
+class sub :public base
+{
+public:
+	void disp()  
+	{
+		cout << "sub disp" << endl;
+	}
+};
+
+int main()
+{
+	sub s1;
+	base b1;
+	base* ptr;
+	ptr = &b1;   
+	ptr->disp();
+	ptr = &s1;     // upcasting
+	ptr->disp();
+	return 0;
+}
+
+op=>
+
+
+==================================================================================================================================================================================
+
+2)
+#include<iostream>
+using namespace std;
+class base
+{
+public:
+	void disp() 
+	{
+		cout << "base disp" << endl;
+	}
+};
+class sub :public base
+{
+public:
+	void disp()  
+	{
+		cout << "sub disp" << endl;
+	}
+};
+
+int main()
+{
+	base* ptr = new base;
+	ptr->disp();
+	ptr = new sub;        // upcasting
+	ptr->disp();
+	return 0;
+}
+
+
+========================================================================================================================================
+object slicing=>
+
+/* Object Slicing
+if an object of a derived class is assigned to a base class object,the compiler accepts it,
+but it copies only the base portion of the object.It slices off the derived portion of the 
+object.
+
+Object slicing happens because, Base copy function (assignment) and constructor does not 
+know anything about Derived. So, only Base part of Derived will be copied. 
+To avoid slicing problem, we should have pure virtual function.
+*/
+
+#include<iostream>
+using namespace std;
+class base
+{
+public:
+	base()
+	{
+		cout<<"base def const"<<endl;
+	}
+	int i,j;
+	~base()
+	{
+		cout<<"base destr"<<endl;
+	}
+};
+class sub:public base
+{
+public:
+	sub()
+	{
+		cout<<"in sub def const"<<endl;
+	}
+	int k;
+	~sub()
+	{
+		cout<<"in sub destr"<<endl;
+	}
+};
+void main()
+{
+	base b;
+	b.i=10;
+	b.j=20;
+	cout<<endl<<b.i<<"\t"<<b.j<<endl;
+	sub s;
+	s.i=100;
+	s.j=200;
+	s.k=300;
+	cout<<endl<<s.i<<"\t"<<s.j<<endl;
+	cout<<endl<<b.i<<"\t"<<b.j<<endl;
+	b=s;// here object slicing will take place
+	cout<<endl<<"Data of b is\t"<<b.i<<"\t"<<b.j<<endl;
+	cout<<endl<<"Data of s is\t"<<s.i<<"\t"<<s.j<<"\t"<<s.k<<endl;
+}
+
+
+
+
+/* In the above program b contains i,j whereas s contains i,j and k.
+when we say   b=s
+only i and j of s get copied into i and j of b. k does not get copied. 
+That is object s got sliced.
+*/
+
+=========================================================================================================================================================================================
+
+op=>
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------2)
+#include<iostream>
+using namespace std;
+
+class base
+{
+public:
+	virtual void disp()
+	{
+		cout<<"in base disp"<<endl;
+	}
+};
+class sub1:public base
+{
+public:
+	void disp()
+	{
+		cout<<"in sub1 disp"<<endl;
+	}
+};
+class sub2:public base
+{
+public:
+	void disp()
+	{
+		cout<<"in sub2 disp"<<endl;
+	}
+};
+void show(base *b)
+{
+	sub2 *ptr=dynamic_cast<sub2*>(b);
+	if(ptr)
+	{
+		ptr->disp();
+	}
+}
+int main()
+{
+	show(new sub1);
+	show(new sub2);
+}
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3)
+#include<iostream>
+using namespace std;
+
+class base
+{
+public:
+	virtual void disp()
+	{
+		cout<<"in base disp"<<endl;
+	}
+};
+class sub1:public base
+{
+public:
+	void disp()
+	{
+		cout<<"in sub1 disp"<<endl;
+	}
+};
+class sub2:public base
+{
+public:
+	void disp()
+	{
+		cout<<"in sub2 disp"<<endl;
+	}
+};
+void show(base &b)
+{
+	try
+	{
+	sub2 &ref=dynamic_cast<sub2&>(b);
+	ref.disp();
+	}
+	catch(bad_cast &bc)
+	{
+		cout<<"Error is\t"<<bc.what()<<endl;
+	}
+}
+int main()
+{
+	sub1 s1;
+	sub2 s2;
+	show(s1);
+	show(s2);
+}
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+4)
+#include<iostream>
+using namespace std;
+
+class base
+{
+public:
+	virtual void disp()
+	{
+		cout<<"in base disp"<<endl;
+	}
+};
+class sub1:public base
+{
+public:
+	void disp()
+	{
+		cout<<"in sub1 disp"<<endl;
+	}
+};
+class sub2:public base
+{
+public:
+	void disp()
+	{
+		cout<<"in sub2 disp"<<endl;
+	}
+};
+void main()
+{
+	base *arr[2];
+	arr[0]=new sub1;
+	arr[1]=new sub2;
+
+	for(int i=0;i<2;i++)
+	{
+		sub2 *temp=dynamic_cast<sub2*>(arr[i]);
+		if(temp)
+		{
+			temp->disp();
+		}
+	}
+}
+
+
+op=>
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+covarient=>
+
+1)
+#include<iostream>
+using namespace std;
+class A{};
+class B:public A{};
+
+class base
+{
+public:
+	virtual A* disp()
+	{
+		cout<<"in base disp returning A*"<<endl;
+		return new A();
+	}
+};
+class sub:public base
+{
+public:
+	B* disp()
+	{
+		cout<<"in sub disp returning B*"<<endl;
+		return new B();
+	}
+};
+int main()
+{
+	sub s;
+	s.disp();
+}
+
+op=>
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2)
+#include<iostream>
+using namespace std;
+class A{};
+class B:public A{};
+class base
+{
+public:
+	virtual A* disp()
+	{
+		cout<<"in base disp returning A*"<<endl;
+		return new A();
+	}
+};
+class sub:public base
+{
+public:
+	B* disp()
+	{
+		cout<<"in sub disp returning B*"<<endl;
+		return new B();
+	}
+};
+int main()
+{
+	base *ptr=new sub;
+	cout<<"Using Parent class Pointer"<<endl;
+	ptr->disp();
+}
+op=>
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3)
+/*
+typeid checks the type of pointer if the class is "Non-Polymorphic" i.e. it does not have any virtual or pure virtual function.
+
+typeid can check the content of pointer, if the class is "Polymorphic" i.e. it has at least one virtual or pure virtual function.
+
+*/
+
+#include<iostream>
+using namespace std;
+class A{};
+class B:public A{};
+class base
+{
+public:
+	virtual A* disp()
+	{
+		cout<<"in base disp returning A*"<<endl;
+		return new A();
+	}
+};
+class sub:public base
+{
+public:
+	B* disp()
+	{
+		cout<<"in sub disp returning B*"<<endl;
+		return new B();
+	}
+};
+int main()
+{
+	base *ptr=new sub;
+	cout<<"Using Parent class Pointer"<<endl;
+	A *ob=ptr->disp();
+
+	// typeid here will consider type of "ob" as A is not polymorphic
+	if(typeid(*ob)==typeid(B))
+	{
+		cout<<"Content of ob is B"<<endl;
+	}
+	else
+	{
+		cout<<"Content of ob is A"<<endl;
+	}
+}
+
+op=>
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3_1)
+/*
+typeid checks the type of pointer if the class is "Non-Polymorphic" i.e. it does not have any virtual or pure virtual function.
+
+typeid can check the content of pointer, if the class is "Polymorphic" i.e. it has at least one virtual or pure virtual function.
+
+*/
+
+#include<iostream>
+using namespace std;
+class A
+{
+	virtual void fun()
+	{
+	}
+};
+class B:public A{};
+class base
+{
+public:
+	virtual A* disp()
+	{
+		cout<<"in base disp returning A*"<<endl;
+		return new A();
+	}
+};
+class sub:public base
+{
+public:
+	B* disp()
+	{
+		cout<<"in sub disp returning B*"<<endl;
+		return new B();
+	}
+};
+int main()
+{
+	base *ptr=new sub;
+	cout<<"Using Parent class Pointer"<<endl;
+	A *ob=ptr->disp();
+
+	// typeid here will check the content of "ob" as A is polymorphic
+
+	if(typeid(*ob)==typeid(B))
+	{
+		cout<<"Content of ob is B"<<endl;
+	}
+	else
+	{
+		cout<<"Content of ob is A"<<endl;
+	}
+}
+
+op=>
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+4)
+#include<iostream>
+using namespace std;
+class A{};
+class B:public A{};
+class base
+{
+public:
+	virtual A* disp()
+	{
+		cout<<"in base disp returning A*"<<endl;
+		return new A();
+	}
+};
+class sub:public base
+{
+public:
+	B* disp()
+	{
+		cout<<"in sub disp returning B*"<<endl;
+		return new B();
+	}
+};
+int main()
+{
+	base *ptr=new sub;
+	cout<<"Using Parent class Pointer"<<endl;
+	A *ob=ptr->disp();
+	
+// error C2683: 'dynamic_cast' : 'A' is not a polymorphic type
+
+	if(dynamic_cast<B*>(ob))
+	{
+		cout<<"Content of ob is B"<<endl;
+	}
+	else
+	{
+		cout<<"Content of ob is A"<<endl;
+	}
+}
+
+op=>
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+5)
+#include<iostream>
+using namespace std;
+class A
+{
+public:
+	virtual void aFun()
+	{
+	}
+};
+class B:public A{};
+class base
+{
+public:
+	virtual A* disp()
+	{
+		cout<<"in base disp returning A*"<<endl;
+		return new A();
+	}
+};
+class sub:public base
+{
+public:
+	B* disp()
+	{
+		cout<<"in sub disp returning B*"<<endl;
+		return new B();
+	}
+};
+int main()
+{
+	base *ptr=new sub;
+	cout<<"Using Parent class Pointer"<<endl;
+	A *ob=ptr->disp();
+
+	// It will work since A is of Polymorphic type
+	if(dynamic_cast<B*>(ob))
+	{
+		cout<<"Content of ob is B"<<endl;
+	}
+	else
+	{
+		cout<<"Content of ob is A"<<endl;
+	}
+}
+op=>
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+6)
+#include<iostream>
+using namespace std;
+class A
+{
+public:
+	virtual void aFun()
+	{
+	}
+};
+class B:public A{};
+class base
+{
+public:
+	virtual A* disp()
+	{
+		cout<<"in base disp returning A*"<<endl;
+		return new A();
+	}
+};
+class sub:public base
+{
+public:
+	B* disp()
+	{
+		cout<<"in sub disp returning B*"<<endl;
+		return new B();
+	}
+};
+void main()
+{
+	base *ptr=new base;
+	cout<<"Using Parent class Pointer"<<endl;
+	A *ob=ptr->disp();
+	
+	if(dynamic_cast<B*>(ob))
+	{
+		cout<<"Content of ob is B"<<endl;
+	}
+	else
+	{
+		cout<<"Content of ob is A"<<endl;
+	}
+}
+
+op=>
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+7)
+#include<iostream>
+using namespace std;
+class A
+{
+public:
+	virtual void aFun()
+	{
+	}
+};
+class B :public A {};
+class base
+{
+public:
+	virtual A& disp()
+	{
+		cout << "in base disp returning A*" << endl;
+		static A temp;
+		return  temp;
+	}
+};
+class sub :public base
+{
+public:
+	B& disp()
+	{
+		cout << "in sub disp returning B*" << endl;
+		static B temp;
+		return  temp;
+	}
+};
+int main()
+{
+	base* ptr = new sub;
+	cout << "Using Parent class Pointer" << endl;
+	A& ob = ptr->disp();
+	try
+	{
+		dynamic_cast<B&>(ob);
+		cout << "contents of ob is B reference" << endl;
+	}
+	catch (bad_cast& bc)
+	{
+		cout << "contents of ob is not B reference\t" <<bc.what()<< endl;
+	}
+}
+op=>
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+8)
+#include<iostream>
+using namespace std;
+class A
+{
+public:
+	virtual void aFun()
+	{
+	}
+};
+class B :public A {};
+class base
+{
+public:
+	virtual A& disp()
+	{
+		cout << "in base disp returning A*" << endl;
+		static A temp;
+		return  temp;
+	}
+};
+class sub :public base
+{
+public:
+	B& disp()
+	{
+		cout << "in sub disp returning B*" << endl;
+		static B temp;
+		return  temp;
+	}
+};
+int main()
+{
+	base* ptr = new base;
+	cout << "Using Parent class Pointer" << endl;
+	A& ob = ptr->disp();
+	try
+	{
+		dynamic_cast<B&>(ob);
+		cout << "contents of ob is B reference" << endl;
+	}
+	catch (bad_cast& bc)
+	{
+		cout << "contents of ob is not B reference\t" <<bc.what()<< endl;
+	}
+}
+--
+op=>
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+9)
+#include<iostream>
+using namespace std;
+class A
+{
+public:
+	virtual void aFun()
+	{
+	}
+};
+class B :public A {};
+class base
+{
+public:
+	virtual A& disp()
+	{
+		cout << "in base disp returning A*" << endl;
+		static A temp;
+		return  temp;
+	}
+};
+class sub :public base
+{
+public:
+	B& disp()
+	{
+		cout << "in sub disp returning B*" << endl;
+		static B temp;
+		return  temp;
+	}
+};
+int main()
+{
+	base ob1;
+	sub ob2;
+	base& ptr = ob2;
+	cout << "Parent class reference referring to child " << endl;
+	A& ob = ptr.disp();
+	try
+	{
+		dynamic_cast<B&>(ob);
+		cout << "contents of ob is B reference" << endl;
+	}
+	catch (bad_cast& bc)
+	{
+		cout << "contents of ob is not B reference\t" <<bc.what()<< endl;
+	}
+}
+
+op=>
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+10)
+#include<iostream>
+using namespace std;
+class A
+{
+public:
+	virtual void aFun()
+	{
+	}
+};
+class B :public A {};
+class base
+{
+public:
+	virtual A& disp()
+	{
+		cout << "in base disp returning A*" << endl;
+		static A temp;
+		return  temp;
+	}
+};
+class sub :public base
+{
+public:
+	B& disp()
+	{
+		cout << "in sub disp returning B*" << endl;
+		static B temp;
+		return  temp;
+	}
+};
+int main()
+{
+	base ob1;
+	sub ob2;
+	base& ptr = ob1;
+	cout << "Parent class reference referring to parent object " << endl;
+	A& ob = ptr.disp();
+	try
+	{
+		dynamic_cast<B&>(ob);
+		cout << "contents of ob is B reference" << endl;
+	}
+	catch (bad_cast& bc)
+	{
+		cout << "contents of ob is not B reference\t" <<bc.what()<< endl;
+	}
+}
+
+op=>
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+stl=>
+#include<iostream>
+#include<vector>
+using namespace std;
+void main()
+{
+	vector<int> myvect(10,5);
+	vector<int>::iterator myiter;
+	for(myiter=myvect.begin();myiter!=myvect.end();myiter++)
+	{
+		cout<<endl<<*myiter<<endl;
+	}
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
